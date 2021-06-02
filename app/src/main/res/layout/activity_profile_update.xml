@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/weight"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:contentInsetStart="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/backButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/size20"
+                    android:paddingEnd="@dimen/size20"
+                    android:rotation="180"
+                    android:src="@drawable/ic_baseline_navigate_next_24"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="編輯個人資料"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/ts38"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.appcompat.widget.Toolbar>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/size65"
+            android:visibility="visible">
+
+            <com.mikhaellopez.circularimageview.CircularImageView
+                android:id="@+id/userImage"
+                android:layout_width="@dimen/size258"
+                android:layout_height="@dimen/size258"
+                app:civ_border_width="0dp"
+                app:srcCompat="@drawable/icon_upload" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="clip_vertical"
+                    android:paddingEnd="@dimen/size12"
+                    android:text="*"
+                    android:textColor="@color/themColorRed" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="上传头像"
+                    android:textColor="@color/weight"
+                    android:textSize="@dimen/ts28" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size50"
+                android:background="@drawable/login_button_back"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/size12"
+                    app:srcCompat="@drawable/ic_baseline_star_24"
+                    app:tint="@color/themColorRed" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:longClickable="false"
+                    android:paddingTop="@dimen/fieldMargin"
+                    android:textColorHint="@color/weight"
+                    android:theme="@style/LoginTextInputLayoutStyle"
+                    app:startIconTint="@color/themColorRed">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/userName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:hint="請輸入姓名"
+                        android:inputType="textPersonName"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@color/weight"
+                        android:textSize="@dimen/ts28" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size20"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/ShareOrRequest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/Share"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/male_female_switch"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="男"
+                        android:textColor="@color/weight"
+                        android:textSize="@dimen/ts28" />
+
+                    <RadioButton
+                        android:id="@+id/Requested"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size50"
+                        android:background="@drawable/male_female_switch"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="女"
+                        android:textColor="@color/weight"
+                        android:textSize="@dimen/ts28" />
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size20"
+                android:orientation="horizontal">
+
+                <RadioGroup
+                    android:id="@+id/sideSelector"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/left"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/male_female_switch"
+                        android:button="@null"
+                        android:checked="true"
+                        android:gravity="center"
+                        android:text="男"
+                        android:textColor="@color/weight"
+                        android:textSize="@dimen/ts28" />
+
+                    <RadioButton
+                        android:id="@+id/right"
+                        android:layout_width="65dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/size50"
+                        android:background="@drawable/male_female_switch"
+                        android:button="@null"
+                        android:checked="false"
+                        android:gravity="center"
+                        android:text="女"
+                        android:textColor="@color/weight"
+                        android:textSize="@dimen/ts28" />
+                </RadioGroup>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size20"
+                android:background="@drawable/login_button_back"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/size12"
+                    app:srcCompat="@drawable/ic_baseline_star_24"
+                    app:tint="@color/themColorRed" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:longClickable="false"
+                    android:paddingTop="@dimen/fieldMargin"
+                    android:textColorHint="@color/weight"
+                    android:theme="@style/LoginTextInputLayoutStyle"
+                    app:endIconTint="@color/weight">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/dateOfBirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:clickable="true"
+                        android:drawableEnd="@drawable/ic_calendar"
+                        android:drawableTint="@color/weight"
+                        android:focusable="false"
+                        android:hint="請選擇出生年月"
+                        android:inputType="none"
+                        android:longClickable="false"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@color/weight"
+                        android:textSize="@dimen/ts28" />
+
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:paddingTop="@dimen/fieldMargin"
+                android:id="@+id/bestPositionInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size20"
+                android:background="@drawable/login_button_back"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/size12"
+                    app:srcCompat="@drawable/ic_baseline_star_24"
+                    app:tint="@color/themColorRed" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/lableBest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="請選擇最佳位置"
+                        android:textColor="@color/weight"
+                        android:textSize="@dimen/ts24"
+                        android:visibility="invisible" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingTop="8dp">
+
+                        <TextView
+                            android:id="@+id/bestPositionOne"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="請選擇最佳位置"
+                            android:textColor="@color/weight"
+                            android:textSize="@dimen/ts28" />
+
+                        <TextView
+                            android:id="@+id/bestPositiontwo"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:textColor="@color/weight"
+                            android:textSize="@dimen/ts28" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/imageView"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginBottom="16dp"
+                    app:srcCompat="@drawable/ic_baseline_arrow_drop_down_24" />
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size20"
+                android:background="@drawable/login_button_back"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:longClickable="false"
+                    android:paddingTop="@dimen/fieldMargin"
+                    android:textColorHint="@color/weight"
+                    android:theme="@style/LoginTextInputLayoutStyle"
+                    app:startIconTint="@color/themColorRed">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/email"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#00FFFFFF"
+                        android:hint="請輸入電郵地址"
+                        android:inputType="textEmailAddress"
+                        android:textColor="@android:color/white"
+                        android:textColorHint="@color/weight"
+                        android:textSize="@dimen/ts28" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/signUp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/mainButton"
+                android:layout_marginTop="@dimen/size140"
+                android:backgroundTint="@color/themColorGreen"
+                android:text="完成"
+                android:textSize="@dimen/size30"
+                app:cornerRadius="@dimen/size40" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size20"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size20"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="性別"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+
+        <TextView
+
+            android:id="@+id/profileGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size20"
+            android:layout_weight="1"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size20"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="出生年月"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+
+        <TextView
+
+            android:id="@+id/profileDateOfBirth"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size20"
+            android:layout_weight="1"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size20"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="最佳位置"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+
+        <TextView
+
+            android:id="@+id/profileBestLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size20"
+            android:layout_weight="1"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size20"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:text="電郵"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+
+        <TextView
+
+            android:id="@+id/profile_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size20"
+            android:layout_weight="1"
+            android:textColor="@color/gray"
+            android:textSize="@dimen/ts36" />
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Share Meal</string>
+    <string name="title_search">Search</string>
+    <string name="title_messages">Messages</string>
+    <string name="title_share">Share</string>
+    <string name="title_profile">Profile</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="gdpr_privacy_policy_home">
+        By signing in you agree to <a href="https://sites.google.com/view/datacluster/terms-and-conditions">Terms &amp; Conditions</a> and <a href="https://sites.google.com/view/datacluster/privacy-policy">Privacy Policy</a>
+    </string>
+    <string name="NameFilter">abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ </string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="verification">VERIFICATION</string>
+    <string name="you_will_get_sms_with_a_confirmation_code_to_this_number">You will get SMS with a confirmation code to this number.</string>
+    <string name="please_input_code_below">Please input code below</string>
+    <string name="continueText">CONTINUE</string>
+    <string name="waiting_for_otp">Waiting to Autodetect OTP - </string>
+    <string name="title_activity_pick_up_location">Map</string>
+    <string name="upload_success_image">Upload Success </string>
+    <string name="upload_failure">Upload Failure</string>
+    <string name="progress_uploading">Progress Uploading</string>
+</resources>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardBackgroundColor="@color/weight07"
+    app:cardCornerRadius="@dimen/size24"
+    app:cardElevation="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/size30"
+        android:visibility="visible">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/size30"
+            android:layout_marginTop="@dimen/size30"
+            android:layout_marginEnd="@dimen/size30"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="確定要退出"
+                android:textColor="@color/black"
+                android:textSize="@dimen/ts38" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size30"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/Cancel"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size12"
+                android:layout_weight="1"
+                android:backgroundTint="@color/themColorRed"
+                android:text="否"
+                android:textColor="@color/weight"
+                android:visibility="visible"
+                app:cornerRadius="@dimen/size40" />
+
+            <Button
+                android:id="@+id/Approve"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/size12"
+                android:layout_weight="1"
+                android:backgroundTint="@color/themColorGreen"
+                android:text="是"
+                android:textColor="@color/weight"
+                android:visibility="visible"
+                app:cornerRadius="@dimen/size40" />
+
+        </LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

@@ -1,0 +1,131 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="factor">1.5</dimen>
+    <!--Profile-->
+    <dimen name="size258">129dp</dimen>
+    <dimen name="size235">115dp</dimen>
+    <dimen name="size195">100dp</dimen>
+    <dimen name="size160">90dp</dimen>
+    <dimen name="image140">70dp</dimen>
+    <dimen name="size140">60dp</dimen>
+    <dimen name="size98">44dp</dimen>
+    <dimen name="size96">43dp</dimen>
+    <dimen name="size80">40dp</dimen>
+    <dimen name="size65">33dp</dimen>
+    <dimen name="size60">30dp</dimen>
+    <dimen name="size50">25dp</dimen>
+    <dimen name="size44">22dp</dimen>
+    <dimen name="size40">20dp</dimen>
+    <dimen name="size30">15dp</dimen>
+    <dimen name="size25">12.5dp</dimen>
+    <dimen name="size24">12dp</dimen>
+    <dimen name="size20">10dp</dimen>
+    <dimen name="size18">9dp</dimen>
+    <dimen name="size16">8dp</dimen>
+    <dimen name="size10">5dp</dimen>
+    <dimen name="size12">6dp</dimen>
+    <dimen name="size5px">5dp</dimen>
+    
+    <!--TextSize-->
+    <dimen name="ts68">34sp</dimen>
+    <dimen name="ts50">25sp</dimen>
+    <dimen name="ts40">20sp</dimen>
+    <dimen name="ts38">19sp</dimen>
+    <dimen name="ts36">18sp</dimen>
+    <dimen name="ts32">16sp</dimen>
+    <dimen name="ts28">14sp</dimen>
+    <dimen name="ts26">13sp</dimen>
+    <dimen name="ts24">12sp</dimen>
+    <dimen name="ts22">11sp</dimen>
+
+    <!--Button-->
+    <dimen name="subMainButton">40dp</dimen>
+    <dimen name="mainButton">60dp</dimen>
+    <dimen name="teamSelectorwirth">130dp</dimen>
+    <dimen name="teamSelectorHeight">40dp</dimen>
+    <dimen name="size130">75dp</dimen>
+    <dimen name="size70">35dp</dimen>
+    <dimen name="fieldMargin">5dp</dimen>
+
+
+    <dimen name="input_edit_text">20sp</dimen>
+    <dimen name="tile_text_size">20sp</dimen>
+    <dimen name="description_text_size">18sp</dimen>
+    <dimen name="new_add_text">20sp</dimen>
+    <dimen name="appbar_padding">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">176dp</dimen>
+    <dimen name="activityPadding">16dp</dimen>
+    <dimen name="placeholderImage">35dp</dimen>
+    <dimen name="placeholderTextHeight">15dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="divideLine">1dp</dimen>
+    <dimen name="font_headline">12dp</dimen>
+    <dimen name="font_details">15dp</dimen>
+    <dimen name="toolbar_text_size">21dp</dimen>
+    <dimen name="end_margin">16dp</dimen>
+    <dimen name="start_margin">16dp</dimen>
+    <dimen name="divider_top_margin">16dp</dimen>
+    <dimen name="top_margin">6dp</dimen>
+    <!-- error page -->
+    <dimen name="stroke">1dp</dimen>
+    <dimen name="retryCorners">4dp</dimen>
+    <dimen name="error_head_margin_top">24dp</dimen>
+    <dimen name="error_head_text_size">18dp</dimen>
+    <dimen name="error_details_margin_top">8dp</dimen>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="dots_height">30dp</dimen>
+    <dimen name="dots_margin_bottom">20dp</dimen>
+    <dimen name="img_width_height">120dp</dimen>
+    <dimen name="slide_title">30dp</dimen>
+    <dimen name="slide_desc">16dp</dimen>
+    <dimen name="desc_padding">40dp</dimen>
+
+
+
+
+
+    <!--genaral spacing-->
+    <dimen name="spacing_xsmall">2dp</dimen>
+    <dimen name="spacing_small">3dp</dimen>
+    <dimen name="spacing_medium">5dp</dimen>
+    <dimen name="spacing_xmedium">7dp</dimen>
+    <dimen name="spacing_middle">10dp</dimen>
+    <dimen name="spacing_large">15dp</dimen>
+    <dimen name="spacing_smlarge">18dp</dimen>
+    <dimen name="spacing_mlarge">20dp</dimen>
+    <dimen name="spacing_mxlarge">25dp</dimen>
+    <dimen name="spacing_xlarge">35dp</dimen>
+    <dimen name="spacing_xmlarge">40dp</dimen>
+    <dimen name="spacing_xxlarge">50dp</dimen>
+    <dimen name="spacing_xxxlarge">55dp</dimen>
+    <dimen name="appbar_padding_top">8dp</dimen>
+
+
+
+    <dimen name="half_margin">8dp</dimen>
+    <dimen name="medium_margin">24dp</dimen>
+    <dimen name="double_margin">32dp</dimen>
+
+    <dimen name="button_size_shutter">100dp</dimen>
+    <dimen name="button_size_big">56dp</dimen>
+    <dimen name="button_size_small">36dp</dimen>
+    <dimen name="count_down_text_size">72sp</dimen>
+
+
+
+
+
+
+    <dimen name="toggle_recording_button_size">64dp</dimen>
+    <dimen name="player_button_margin">48dp</dimen>
+    <dimen name="big_margin">24dp</dimen>
+    <dimen name="fab_size">56dp</dimen>
+    <dimen name="activity_margin">16dp</dimen>
+    <dimen name="normal_margin">12dp</dimen>
+    <dimen name="extra_big_text_size">22sp</dimen>
+    <dimen name="bigger_margin">20dp</dimen>
+</resources>
