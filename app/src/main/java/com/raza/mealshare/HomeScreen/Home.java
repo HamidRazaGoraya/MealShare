@@ -10,9 +10,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -23,12 +23,14 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.InstanceIdResult;
 import com.google.gson.Gson;
 import com.raza.mealshare.CustomDialogs.MustSignIn;
+import com.raza.mealshare.Database.AllProductsFills.TrackAllItems;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.ExtraFiles.SettingsModel;
-import com.raza.mealshare.HomeScreen.Fragments.Messages.Messages;
+import com.raza.mealshare.HomeScreen.Fragments.Messages.MessagesFragment;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.ProfileFragments;
 import com.raza.mealshare.HomeScreen.Fragments.Search.SearchFragment;
 import com.raza.mealshare.HomeScreen.Fragments.Share.ShareHome;
+import com.raza.mealshare.Location.PickUpLocation;
 import com.raza.mealshare.MainActivity;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.Utilities;
@@ -40,7 +42,7 @@ public class Home extends AppCompatActivity {
     private Fragment current;
     private BottomNavigationView navView;
     private FragmentManager fragmentManager;
-    private Messages messages=new Messages();
+    private MessagesFragment messagesFragment =new MessagesFragment();
     private ProfileFragments profiles=new ProfileFragments();
     private ShareHome shareHome=new ShareHome();
     private SearchFragment searchFragment=new SearchFragment();
@@ -53,6 +55,31 @@ public class Home extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
         SetUpNavigation();
         getSettings();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkForLocation();
+    }
+
+    private void checkForLocation() {
+        Log.i("location","001");
+        if (!Utilities.DoesUserProfileAvailable(this)){
+            Log.i("location","002");
+            if (!Utilities.DoesLocationAvailable(this)){
+                Log.i("location","003");
+                Toast.makeText(this, "Location is required to find Items near u", Toast.LENGTH_SHORT).show();
+                 startActivity(new Intent(this, PickUpLocation.class));
+            }
+        }
+        if (Utilities.DoesUserProfileAvailable(this)|| Utilities.DoesLocationAvailable(this)){
+            if (FirebaseAuth.getInstance().getCurrentUser()!=null){
+                TrackAllItems.GetAllMyItems(this,FirebaseAuth.getInstance().getCurrentUser());
+            }
+            TrackAllItems.GetAllOtherItems(this);
+        }
     }
 
     private void SetUpNavigation() {
@@ -76,7 +103,7 @@ public class Home extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser()!=null){
             fragmentManager.beginTransaction().add(R.id.contant_frame_main, profiles, "profiles").hide(profiles).commit();
             fragmentManager.beginTransaction().add(R.id.contant_frame_main, shareHome, "shareHome").hide(shareHome).commit();
-            fragmentManager.beginTransaction().add(R.id.contant_frame_main, messages, "messages").hide(messages).commit();
+            fragmentManager.beginTransaction().add(R.id.contant_frame_main, messagesFragment, "messages").hide(messagesFragment).commit();
         }
         fragmentManager.beginTransaction().add(R.id.contant_frame_main, searchFragment, "searchFragment").commit();
         current=searchFragment;
@@ -90,8 +117,8 @@ public class Home extends AppCompatActivity {
                             current=searchFragment;
                             return true;
                         case R.id.navigation_messages:
-                            fragmentManager.beginTransaction().hide(current).show(messages).commit();
-                            current=messages;
+                            fragmentManager.beginTransaction().hide(current).show(messagesFragment).commit();
+                            current= messagesFragment;
                             return true;
                         case R.id.navigation_share:
                             fragmentManager.beginTransaction().hide(current).show(shareHome).commit();
@@ -119,19 +146,6 @@ public class Home extends AppCompatActivity {
         });
     }
     private void getSettings() {
-        if (FirebaseAuth.getInstance().getCurrentUser()==null){
-            return;
-        }
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String token = instanceIdResult.getToken();
-                Log.i("tes",token);
-                Map<String, Object> user = new HashMap<>();
-                user.put(ref.fms, token);
-                FirebaseFirestore.getInstance().collection(ref.users).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(user);
-            }
-        });
         FirebaseFirestore.getInstance().collection(ref.ApplicationControl).document(ref.basic_controls).addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -145,6 +159,20 @@ public class Home extends AppCompatActivity {
                 }catch (Exception e){
                     e.printStackTrace();
                 }
+            }
+        });
+
+        if (FirebaseAuth.getInstance().getCurrentUser()==null){
+            return;
+        }
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
+            @Override
+            public void onSuccess(InstanceIdResult instanceIdResult) {
+                String token = instanceIdResult.getToken();
+                Log.i("tes",token);
+                Map<String, Object> user = new HashMap<>();
+                user.put(ref.fms, token);
+                FirebaseFirestore.getInstance().collection(ref.users).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(user);
             }
         });
     }

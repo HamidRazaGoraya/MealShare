@@ -2,6 +2,7 @@ package com.raza.mealshare.Services;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.gson.JsonObject;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
@@ -21,6 +22,7 @@ public class UploadFilesOrignal implements Serializable  {
         FirebaseRef ref=new FirebaseRef();
         try {
             JSONObject bundle=new JSONObject(data);
+            Log.i("Image_Path",bundle.getString(ref.uri));
             uri=Uri.parse(bundle.getString(ref.uri));
             DocumentPath=bundle.getString(ref.DoumentId);
         } catch (JSONException e) {

@@ -177,7 +177,18 @@ public class FirebaseRef  {
     public String Share="Share";
     public String userInfo="userInfo";
     public String SearchRadius="SearchRadius";
-
+    public String PaymentHandler="PaymentHandler";
+    public String results="results";
+    public String payment_request_amount_int="payment_request_amount_int";
+    public String interested_users="interested_users";
+    public String product_id="product_id";
+    public String messages="messages";
+    public String receiver="receiver";
+    public String sender="sender";
+    public String time="time";
+    public String type="type";
+    public String content="content";
+    public String ItemDescriptionLong="ItemDescriptionLong";
 
     public FirebaseRef() {
         TaskType="taskType";

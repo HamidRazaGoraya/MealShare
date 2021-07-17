@@ -57,39 +57,6 @@ public class ProfileButtonsAdopter extends RecyclerView.Adapter<ProfileButtonsAd
                 }
             }
         });
-        if (itemModel.getId().equals("6") || itemModel.getId().equals("2")){
-             if (itemModel.getId().equals("6")){
-                 TextView versionNumber=holder.itemView.findViewById(R.id.secondText);
-                 versionNumber.setVisibility(View.VISIBLE);
-             }else {
-                 holder.itemView.findViewById(R.id.secondText).setVisibility(View.GONE);
-                 holder.itemView.findViewById(R.id.nextOption).setVisibility(View.GONE);
-                 holder.itemView.findViewById(R.id.yesNo).setVisibility(View.VISIBLE);
-                 RadioGroup yesNo=holder.itemView.findViewById(R.id.yesNo);
-
-                 yesNo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                     @Override
-                     public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                         RadioButton yesButton=holder.itemView.findViewById(R.id.yessButton);
-                         RadioButton noButton=holder.itemView.findViewById(R.id.noButton);
-                         if (radioGroup.getCheckedRadioButtonId()==R.id.yessButton){
-                             yesButton.setTextColor(mContext.getResources().getColor(R.color.themColorGreen));
-                             noButton.setTextColor(mContext.getResources().getColor(R.color.weight));
-                             mClickListener.ChangeNotification("Y");
-                         }else {
-                             yesButton.setTextColor(mContext.getResources().getColor(R.color.weight));
-                             noButton.setTextColor(mContext.getResources().getColor(R.color.themColorGreen));
-                             mClickListener.ChangeNotification("N");
-                         }
-                     }
-                 });
-             }
-        }else {
-            holder.itemView.findViewById(R.id.secondText).setVisibility(View.GONE);
-            holder.itemView.findViewById(R.id.nextOption).setVisibility(View.VISIBLE);
-            holder.itemView.findViewById(R.id.yesNo).setVisibility(View.GONE);
-        }
-
     }
     @Override
     public int getItemCount() {

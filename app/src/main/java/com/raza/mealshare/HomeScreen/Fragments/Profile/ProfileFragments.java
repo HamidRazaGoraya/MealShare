@@ -20,10 +20,12 @@ import com.raza.mealshare.CustomDialogs.ConfirmDialog;
 import com.raza.mealshare.CustomDialogs.CustomToast;
 import com.raza.mealshare.CustomDialogs.DialogButtons;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
+import com.raza.mealshare.HomeScreen.Fragments.Profile.Favourite.FSearchActivity;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.Model.ProfileInfo;
 import com.raza.mealshare.Location.PickUpLocation;
 import com.raza.mealshare.MainActivity;
 import com.raza.mealshare.R;
+import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.FragmentProfileBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -32,8 +34,6 @@ import java.util.Objects;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 
 public class ProfileFragments extends Fragment {
@@ -86,8 +86,7 @@ private ProfileInfo profileInfo=null;
       if (!TextUtils.isEmpty(profileInfo.getUser_profile_pic())){
           Glide.with(requireContext()).load(FirebaseStorage.getInstance().getReference().child(profileInfo.getUser_profile_pic())).into(fragmentProfileBinding.profileImage);
       }
-      fragmentProfileBinding.LevelName.setText(profileInfo.getUser_level()+" Level");
-      fragmentProfileBinding.points.setText("( "+profileInfo.getUser_points()+") Points");
+        Utilities.SaveProfile(requireActivity(),profileInfo);
     }
 
 
@@ -102,6 +101,13 @@ private ProfileInfo profileInfo=null;
 
 
     private void setUpAllButtons() {
+        fragmentProfileBinding.myFavourt.title.setText(R.string.my_favourite);
+        fragmentProfileBinding.myFavourt.mainCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(requireActivity(), FSearchActivity.class));
+            }
+        });
         view.findViewById(R.id.editPicLocation).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

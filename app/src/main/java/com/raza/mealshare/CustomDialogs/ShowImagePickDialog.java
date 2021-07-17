@@ -55,7 +55,7 @@ public class ShowImagePickDialog extends DialogFragment {
                 Objects.requireNonNull(ShowImagePickDialog.this.getDialog()).dismiss();
             }
         });
-        title.setText("Pick From");
+        title.setText(R.string.pick_from);
         title.setVisibility(View.VISIBLE);
         title.setBackgroundColor(requireActivity().getResources().getColor(R.color.themColorGreen));
         builder.setView(view);

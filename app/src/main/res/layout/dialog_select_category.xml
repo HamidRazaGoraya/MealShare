@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/size30"
-                android:text="Choose category"
+                android:text="@string/choose_category"
                 android:textColor="@color/weight"
                 android:textSize="@dimen/ts38" />
 

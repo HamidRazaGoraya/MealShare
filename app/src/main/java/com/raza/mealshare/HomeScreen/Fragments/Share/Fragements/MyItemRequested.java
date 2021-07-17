@@ -1,33 +1,31 @@
 package com.raza.mealshare.HomeScreen.Fragments.Share.Fragements;
 
+import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QuerySnapshot;
+import com.google.gson.Gson;
 import com.raza.mealshare.CustomDialogs.CustomToast;
 import com.raza.mealshare.CustomDialogs.ShowImage;
+import com.raza.mealshare.Database.AllDataBaseConstant;
+import com.raza.mealshare.Database.AllProductsFills.MyProduct;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Fragments.Share.Adopter.FoodItemAdopter;
+import com.raza.mealshare.HomeScreen.Fragments.Share.EditItem;
 import com.raza.mealshare.Models.All_Images;
-import com.raza.mealshare.Models.PostedItems;
 import com.raza.mealshare.databinding.FragmentMyItemRequestedBinding;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MyItemRequested extends Fragment {
 
@@ -51,8 +49,8 @@ public class MyItemRequested extends Fragment {
         binding.itemList.setAdapter(foodItemAdopter);
         foodItemAdopter.setClickListener(new FoodItemAdopter.ItemClickListener() {
             @Override
-            public void onItemClick(PostedItems postedItems) {
-                new CustomToast(requireActivity(),"Edit coming soon");
+            public void onItemClick(MyProduct myProduct) {
+                startActivity(new Intent(requireContext(), EditItem.class).putExtra("myProduct",new Gson().toJson(myProduct)));
             }
 
             @Override
@@ -60,21 +58,24 @@ public class MyItemRequested extends Fragment {
                 new ShowImage(all_images.getData_fullimage_storage_path()).show(getChildFragmentManager(),"Image");
             }
         });
-        FirebaseFirestore.getInstance().collection(ref.users).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(ref.AllFoodShared).whereEqualTo(ref.Share,false).orderBy(ref.data_submission_time, Query.Direction.DESCENDING).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        AllDataBaseConstant.getInstance(requireContext()).allMyItemsDeo().LiveAllShared(0).observeForever(new Observer<List<MyProduct>>() {
             @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+            public void onChanged(List<MyProduct> myProducts) {
                 try {
-                    foodItemAdopter.deleteAllItems();
-                    binding.emptyList.setVisibility(View.VISIBLE);
-                    assert value != null;
-                    for (DocumentSnapshot snapshot:value.getDocuments()){
-                        binding.emptyList.setVisibility(View.GONE);
-                        foodItemAdopter.insertItems(snapshot.toObject(PostedItems.class).withId(snapshot.getId()));
+                    try {
+                        foodItemAdopter.deleteAllItems();
+                        binding.emptyList.setVisibility(View.VISIBLE);
+                        if (myProducts!=null){
+                            foodItemAdopter.UpdateAll(myProducts);
+                        }
+                    }catch (Exception e){
+                        e.printStackTrace();
                     }
                 }catch (Exception e){
                     e.printStackTrace();
                 }
             }
         });
+
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import com.google.gson.Gson;
 import com.raza.mealshare.CustomDialogs.CustomToast;
 import com.raza.mealshare.CustomDialogs.ShowImage;
+import com.raza.mealshare.Database.AllProductsFills.MyProduct;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Fragments.Share.Adopter.FoodItemAdopter;
 import com.raza.mealshare.Models.All_Images;
@@ -42,7 +43,7 @@ public class ShowAllItems extends AppCompatActivity {
         binding.emptyList.setVisibility(View.GONE);
         foodItemAdopter.setClickListener(new FoodItemAdopter.ItemClickListener() {
             @Override
-            public void onItemClick(PostedItems postedItems) {
+            public void onItemClick(MyProduct postedItems) {
                 new CustomToast(ShowAllItems.this,"Detailed view coming soon");
             }
             @Override

@@ -131,7 +131,5 @@ public class ShareHome extends Fragment {
         if (!TextUtils.isEmpty(profileInfo.getUser_profile_pic())){
             Glide.with(requireContext()).load(FirebaseStorage.getInstance().getReference().child(profileInfo.getUser_profile_pic())).into(binding.profileImage);
         }
-        binding.LevelName.setText(profileInfo.getUser_level()+" Level");
-        binding.points.setText("( "+profileInfo.getUser_points()+") Points");
     }
 }

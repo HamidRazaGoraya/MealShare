@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.raza.mealshare.Database.AllProductsFills.MyProduct;
 import com.raza.mealshare.Models.All_Images;
 import com.raza.mealshare.Models.ImageAndCard;
 import com.raza.mealshare.Models.PostedItems;
@@ -16,6 +17,7 @@ import com.raza.mealshare.Utilities.Utilities;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -26,12 +28,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class FoodItemAdopter extends RecyclerView.Adapter<FoodItemAdopter.ViewHolder> {
 
-    private ArrayList<PostedItems> postedItems;
+    private ArrayList<MyProduct> postedItems;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private Context mContext;
 
-    public FoodItemAdopter(Context context, ArrayList<PostedItems> postedItems) {
+    public FoodItemAdopter(Context context, ArrayList<MyProduct> postedItems) {
         this.mInflater   = LayoutInflater.from(context);
         this.postedItems = postedItems;
         mContext=context;
@@ -48,18 +50,23 @@ public class FoodItemAdopter extends RecyclerView.Adapter<FoodItemAdopter.ViewHo
     @SuppressLint("ClickableViewAccessibility")
     @Override
     public void onBindViewHolder(@NonNull final ViewHolder holder, final int position) {
-        PostedItems postedItem= this.postedItems.get(position);
+        MyProduct postedItem= this.postedItems.get(position);
         holder.title.setText(postedItem.getItemName());
         holder.Description.setText("\t"+postedItem.getItemDescription());
         holder.Condition.setText(postedItem.getCondition());
-        if (postedItem.getAll_Images()!=null){
-            for (int i=0;i<postedItem.getAll_Images().size();i++){
-                holder.Cards.get(i).ShowImage(postedItem.getAll_Images().get(i).getData_thumbnail_storage_path(),mContext);
+        if (postedItem.getAllImages()!=null){
+            for (int i=0;i<postedItem.getAllImages().size();i++){
+                holder.Cards.get(i).ShowImage(postedItem.getAllImages().get(i).getData_thumbnail_storage_path(), mContext, new ImageAndCard.Failed() {
+                    @Override
+                    public void reload() {
+                        notifyDataSetChanged();
+                    }
+                });
                 int finalI = i;
                 holder.Cards.get(i).getCardView().setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mClickListener.OnImageClick(postedItem.getAll_Images().get(finalI));
+                        mClickListener.OnImageClick(postedItem.getAllImages().get(finalI));
                     }
                 });
             }
@@ -112,10 +119,10 @@ public class FoodItemAdopter extends RecyclerView.Adapter<FoodItemAdopter.ViewHo
     }
 
     public interface ItemClickListener {
-        void onItemClick(PostedItems postedItems);
+        void onItemClick(MyProduct postedItems);
         void OnImageClick(All_Images all_images);
     }
-    public void insertItems(PostedItems category){
+    public void insertItems(MyProduct category){
         this.postedItems.add(category);
         notifyItemInserted(getItemCount() - 1);
         notifyDataSetChanged();
@@ -123,7 +130,7 @@ public class FoodItemAdopter extends RecyclerView.Adapter<FoodItemAdopter.ViewHo
 
 
 
-    public void insertAtTop(PostedItems category){
+    public void insertAtTop(MyProduct category){
          this.postedItems.add(0,category);
             notifyItemInserted(0);
             notifyDataSetChanged();
@@ -134,7 +141,12 @@ public class FoodItemAdopter extends RecyclerView.Adapter<FoodItemAdopter.ViewHo
         postedItems.clear();
         notifyItemRangeRemoved(0,size);
     }
-    public PostedItems getItem(int position){
+    public void UpdateAll(List<MyProduct> myProducts){
+        postedItems.clear();
+        postedItems.addAll(myProducts);
+        notifyDataSetChanged();
+    }
+    public MyProduct getItem(int position){
         return postedItems.get(position);
     }
 

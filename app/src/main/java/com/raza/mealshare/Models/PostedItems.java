@@ -9,6 +9,10 @@ import java.util.Date;
 import java.util.List;
 
 public  class PostedItems {
+    @Expose
+    @SerializedName("interested_users")
+    private List<Interested_users> interested_users;
+
     public PostedItems() {
     }
 
@@ -34,6 +38,9 @@ public  class PostedItems {
     @SerializedName("ItemDescription")
     private String ItemDescription;
     @Expose
+    @SerializedName("ItemDescriptionLong")
+    private String ItemDescriptionLong;
+    @Expose
     @SerializedName("Condition")
     private String Condition;
     @Expose
@@ -44,6 +51,28 @@ public  class PostedItems {
     private List<All_Images> All_Images;
     @Exclude
     private String DocumentId;
+
+
+    public <T extends PostedItems> T withId(final String taskId) {
+        this.DocumentId = taskId;
+        return (T) this;
+    }
+
+    public List<Interested_users> getInterested_users() {
+        return interested_users;
+    }
+
+    public void setInterested_users(List<Interested_users> interested_users) {
+        this.interested_users = interested_users;
+    }
+
+    public String getItemDescriptionLong() {
+        return ItemDescriptionLong;
+    }
+
+    public void setItemDescriptionLong(String itemDescriptionLong) {
+        ItemDescriptionLong = itemDescriptionLong;
+    }
 
     public GeoPoint getUser_location() {
         return user_location;
@@ -124,8 +153,12 @@ public  class PostedItems {
     public void setAll_Images(List<All_Images> All_Images) {
         this.All_Images = All_Images;
     }
-    public <T extends PostedItems> T withId(final String taskId) {
-        this.DocumentId = taskId;
-        return (T) this;
+
+    public String getDocumentId() {
+        return DocumentId;
+    }
+
+    public void setDocumentId(String DocumentId) {
+        this.DocumentId = DocumentId;
     }
 }

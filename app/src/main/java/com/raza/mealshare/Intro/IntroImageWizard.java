@@ -16,11 +16,19 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.GeoPoint;
+import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Home;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.Tools;
+import com.raza.mealshare.Utilities.Utilities;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.HashMap;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.PagerAdapter;
@@ -58,6 +66,14 @@ public class IntroImageWizard extends AppCompatActivity {
         initComponent();
         Tools.setSystemBarColor(this, R.color.grey_5);
         Tools.setSystemBarLight(this);
+          GeoPoint location=Utilities.GetLatLog(this);
+          if (location!=null){
+              HashMap<String, Object> map = new HashMap<>();
+              FirebaseRef ref=new FirebaseRef();
+              map.put(ref.user_location,location);
+              FirebaseFirestore.getInstance().collection(ref.users).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).update(map);
+          }
+
     }
 
     private void initComponent() {
@@ -122,12 +138,12 @@ public class IntroImageWizard extends AppCompatActivity {
             bottomProgressDots(position);
 
             if (position == about_title_array.length - 1) {
-                btnNext.setText("GOT IT");
+                btnNext.setText(R.string.got_it);
                 btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 btnNext.setTextColor(Color.WHITE);
 
             } else {
-                btnNext.setText("NEXT");
+                btnNext.setText(getString(R.string.next));
                 btnNext.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
                 btnNext.setTextColor(Color.WHITE);
             }

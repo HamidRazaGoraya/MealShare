@@ -38,6 +38,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -191,8 +192,8 @@ public class MyUploadService extends MyBaseTaskService {
     @NotNull
     private StorageReference FileStorageRef(@NotNull UploadFilesOrignal selectedFiles, String thumbnail){
         StorageReference photoRef;
+        Log.i("Image_Path",selectedFiles.getUri().toString());
         photoRef=mStorageRef.child(ref.AllFood).child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child(ref.user_submitted_data);
-        UploadImage.UploadThumbnailImage(selectedFiles.getUri(), photoRef.child("thumbnails").child(thumbnail + "_200x300.jpg"));
         return photoRef.child(thumbnail + ".jpg");
     }
 

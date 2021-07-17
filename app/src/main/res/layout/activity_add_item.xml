@@ -9,6 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:context=".HomeScreen.Fragments.Share.AddItem">
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -18,35 +19,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?attr/colorPrimary"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="?attr/actionBarTheme"
-                app:contentInsetStart="0dp">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="Share Food"
-                        android:textColor="@color/ColorWeight"
-                        android:textSize="@dimen/ts38"
-                        android:textStyle="bold"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </androidx.appcompat.widget.Toolbar>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,7 +47,7 @@
                         android:checked="true"
                         android:gravity="center"
                         android:padding="0dp"
-                        android:text="Share"
+                        android:text="@string/share"
                         android:textColor="@drawable/share_request_color"
                         android:textSize="12sp" />
 
@@ -91,7 +63,7 @@
                         android:checked="false"
                         android:gravity="center"
                         android:padding="0dp"
-                        android:text="Request"
+                        android:text="@string/request"
                         android:textColor="@drawable/share_request_color"
                         android:textSize="12sp" />
                 </RadioGroup>
@@ -133,7 +105,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00FFFFFF"
-                        android:hint="Enter Item name"
+                        android:hint="@string/enter_item_name"
                         android:inputType="textPersonName"
                         android:textSize="@dimen/ts28" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -168,7 +140,45 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00FFFFFF"
-                        android:hint="Enter Item Short Description"
+                        android:hint="@string/enter_item_short_description"
+                        android:inputType="textPersonName"
+                        android:textSize="@dimen/ts28" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size20"
+                android:background="@drawable/login_button_back"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="@dimen/size12"
+                    app:srcCompat="@drawable/ic_baseline_star_24"
+                    app:tint="@color/themColorRed" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/LoginTextInputLayoutStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:longClickable="false"
+
+                    android:paddingTop="@dimen/fieldMargin"
+                    android:theme="@style/LoginTextInputLayoutStyle"
+                    app:startIconTint="@color/themColorRed">
+
+                    <MultiAutoCompleteTextView
+                        android:layout_marginStart="15dp"
+                        android:paddingTop="15dp"
+                        android:gravity="start"
+                        android:id="@+id/ItemDescriptionLong"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:background="#00FFFFFF"
+                        android:hint="Long Description "
                         android:inputType="textPersonName"
                         android:textSize="@dimen/ts28" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -200,7 +210,7 @@
                     app:endIconTint="@color/weight">
 
                     <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/FoodCondition"
+                        android:id="@+id/Category"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="#00FFFFFF"
@@ -208,7 +218,7 @@
                         android:drawableEnd="@drawable/ic_arrow_drop_down_black_24dp"
                         android:drawableTint="@color/black"
                         android:focusable="false"
-                        android:hint="State of food"
+                        android:hint="@string/category"
                         android:inputType="none"
                         android:longClickable="false"
                         android:textSize="@dimen/ts28" />
@@ -221,10 +231,25 @@
                 android:layout_marginTop="@dimen/size20"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                <TextView
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Photos"/>
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+
+                        android:visibility="visible"
+                        app:srcCompat="@drawable/ic_baseline_star_24"
+                        app:tint="@color/themColorRed" />
+                    <TextView
+                        android:layout_marginStart="@dimen/size12"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/photos"/>
+                </LinearLayout>
                 <LinearLayout
                     android:orientation="horizontal"
                     android:layout_width="match_parent"
@@ -258,7 +283,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/size20"
-                                android:text="Pick image"
+                                android:text="@string/pick_image"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/ts24" />
 
@@ -315,7 +340,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/size20"
-                                android:text="Pick image"
+                                android:text="@string/pick_image"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/ts24" />
 
@@ -372,7 +397,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/size20"
-                                android:text="Pick image"
+                                android:text="@string/pick_image"
                                 android:textColor="@color/black"
                                 android:textSize="@dimen/ts24" />
 
@@ -402,74 +427,6 @@
                     </androidx.constraintlayout.widget.ConstraintLayout>
                 </LinearLayout>
             </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_marginTop="@dimen/size20"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-
-                        android:visibility="visible"
-                        app:srcCompat="@drawable/ic_baseline_star_24"
-                        app:tint="@color/themColorRed" />
-                    <TextView
-                        android:layout_marginStart="@dimen/size12"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Category"/>
-                </LinearLayout>
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size12">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:id="@+id/pickCategory"
-                        android:layout_width="@dimen/size160"
-                        android:layout_height="@dimen/size160"
-                        android:background="@drawable/login_button_back_unchecked">
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="0dp"
-                            android:gravity="center"
-                            android:orientation="vertical"
-                            android:visibility="visible"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent">
-
-                            <ImageView
-                                android:id="@+id/CategoryImage"
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                app:srcCompat="@drawable/ic_baseline_add_24"
-                                />
-
-                            <TextView
-                                android:id="@+id/CategoryText"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginTop="@dimen/size20"
-                                android:text="Pick Category"
-                                android:textColor="@color/black"
-                                android:textSize="@dimen/ts24" />
-
-                        </LinearLayout>
-
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-                </LinearLayout>
-            </LinearLayout>
 
             <Button
                 android:id="@+id/UploadItem"
@@ -477,7 +434,7 @@
                 android:layout_height="@dimen/mainButton"
                 android:layout_marginTop="@dimen/size140"
                 android:backgroundTint="?attr/colorPrimary"
-                android:text="Submit"
+                android:text="@string/submit"
                 android:textSize="@dimen/size30"
                 app:cornerRadius="@dimen/size40" />
         </LinearLayout>

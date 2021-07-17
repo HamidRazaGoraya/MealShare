@@ -23,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/size30"
-                android:text="Select Search Area Radius"
+                android:text="@string/select_search_area_radius"
                 android:textColor="@color/weight"
                 android:textSize="@dimen/ts38" />
 
@@ -55,7 +55,7 @@
                 android:layout_margin="@dimen/size12"
                 android:layout_weight="1"
                 android:backgroundTint="@color/themColorRed"
-                android:text="Cancel"
+                android:text="@string/cancel"
                 android:textColor="@color/weight"
                 android:visibility="visible"
                 app:cornerRadius="@dimen/size40" />
@@ -67,7 +67,7 @@
                 android:layout_margin="@dimen/size12"
                 android:layout_weight="1"
                 android:backgroundTint="@color/themColorGreen"
-                android:text="Done"
+                android:text="@string/done"
                 android:textColor="@color/weight"
                 android:visibility="visible"
                 app:cornerRadius="@dimen/size40" />

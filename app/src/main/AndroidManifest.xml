@@ -11,8 +11,13 @@
         android:supportsRtl="true"
         android:theme="@style/MainThem"
         tools:replace="android:theme">
-        <activity android:name=".HomeScreen.Fragments.Search.ActivityAlItems.ShowAllItems"></activity>
-        <activity android:name=".HomeScreen.Fragments.Share.AddItem" />
+        <activity android:name=".HomeScreen.Fragments.ItemsDetails.ItemDetails"
+            android:theme="@style/BaseTheme"/>
+        <activity android:name=".HomeScreen.Fragments.Share.Results.RequestAndShareResults" />
+        <activity android:name=".HomeScreen.Fragments.Search.ActivityAlItems.ShowAllItems" />
+        <activity
+            android:name=".HomeScreen.Fragments.Share.AddItem"
+            android:theme="@style/AppTheme" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
@@ -23,14 +28,11 @@
         -->
         <activity
             android:name=".Location.PickUpLocation"
-            android:label="@string/title_activity_pick_up_location"
-            android:theme="@style/MainThem" />
+            android:theme="@style/AppTheme" />
         <activity android:name=".HomeScreen.Home" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/MainThem">
-
-        </activity>
+            android:theme="@style/MainThem" />
         <activity
             android:name=".ExtraFiles.SplashActivity"
             android:screenOrientation="portrait">
@@ -46,6 +48,11 @@
         <activity
             android:name=".HomeScreen.Fragments.Profile.UpdateUserProfile"
             android:theme="@style/MainThem" />
+        <activity
+            android:name=".HomeScreen.Fragments.Share.EditItem"
+            android:theme="@style/AppTheme" />
+        <activity android:name=".HomeScreen.Fragments.Messages.ChatBBM" />
+        <activity android:name=".HomeScreen.Fragments.Profile.Favourite.FSearchActivity" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

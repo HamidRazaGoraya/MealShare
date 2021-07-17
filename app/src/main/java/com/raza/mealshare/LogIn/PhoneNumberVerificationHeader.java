@@ -227,15 +227,19 @@ public class PhoneNumberVerificationHeader extends Fragment implements IOnBackPr
                                                         loadFragment(fragment);
                                                     }
                                                 }else {
-                                                    Toast.makeText(getContext(), "Try again later", Toast.LENGTH_SHORT).show();
+                                                    if (getContext()!=null){
+                                                        Toast.makeText(getContext(), "Try again later", Toast.LENGTH_SHORT).show();
+                                                    }
                                                 }
                                             }
                                         });
                                     }
                                 }else {
                                     loadingDialog.dismiss();
-                                    Toast.makeText(getContext(), "not Verified", Toast.LENGTH_SHORT).show();
-                                    Log.i("user", "notVerified");
+                                    if(getContext()!=null){
+                                        Toast.makeText(getContext(), "not Verified", Toast.LENGTH_SHORT).show();
+                                        Log.i("user", "notVerified");
+                                    }
                                 }
 
                             }

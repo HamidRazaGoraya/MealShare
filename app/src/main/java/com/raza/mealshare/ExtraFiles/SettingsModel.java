@@ -2,6 +2,7 @@ package com.raza.mealshare.ExtraFiles;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
+import com.raza.mealshare.Models.Category;
 
 import java.util.List;
 

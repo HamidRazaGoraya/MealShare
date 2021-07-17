@@ -43,7 +43,7 @@ public class ConfirmDialog {
             e.printStackTrace();
         }
     }
-    public static void ShowConfirmDeleteTeam(final Context context, final DialogButtons dialogButtons){
+    public static void ShowConfirmDeleteItem(final Context context, final DialogButtons dialogButtons){
         try {
             final Dialog DialogYesNo = new Dialog(context);
             DialogYesNo.requestWindowFeature(Window.FEATURE_NO_TITLE); // before
@@ -51,9 +51,9 @@ public class ConfirmDialog {
             Objects.requireNonNull(DialogYesNo.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             DialogYesNo.setCancelable(false);
             TextView title=DialogYesNo.findViewById(R.id.title);
-            title.setText("確定要解散球隊");
+            title.setText(R.string.sure_delete_this_item);
             Button approve=DialogYesNo.findViewById(R.id.Approve);
-            approve.setText("是");
+            approve.setText(R.string.yes);
             approve.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -62,7 +62,7 @@ public class ConfirmDialog {
                 }
             });
             Button reject=DialogYesNo.findViewById(R.id.Cancel);
-            reject.setText("否");
+            reject.setText(context.getString(R.string.cancel));
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -147,9 +147,9 @@ public class ConfirmDialog {
             Objects.requireNonNull(DialogYesNo.getWindow()).setBackgroundDrawable(new ColorDrawable(android.graphics.Color.TRANSPARENT));
             DialogYesNo.setCancelable(false);
             TextView title=DialogYesNo.findViewById(R.id.title);
-            title.setText("Do you want to logout");
+            title.setText(R.string.sure_logout);
             Button approve=DialogYesNo.findViewById(R.id.Approve);
-            approve.setText("Yes");
+            approve.setText(context.getString(R.string.yes));
             approve.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -158,7 +158,7 @@ public class ConfirmDialog {
                 }
             });
             Button reject=DialogYesNo.findViewById(R.id.Cancel);
-            reject.setText("Cancel");
+            reject.setText(context.getString(R.string.cancel));
             reject.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

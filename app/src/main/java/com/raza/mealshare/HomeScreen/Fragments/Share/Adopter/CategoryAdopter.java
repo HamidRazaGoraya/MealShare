@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.raza.mealshare.ExtraFiles.Category;
+import com.raza.mealshare.Models.Category;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.Utilities;
 

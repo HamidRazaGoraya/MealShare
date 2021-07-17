@@ -75,48 +75,31 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Profile"
+                    android:text="@string/profile"
                     android:textSize="@dimen/ts28" />
             </LinearLayout>
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size50"
-                android:background="@drawable/login_button_back"
-                android:orientation="horizontal">
+                android:longClickable="false"
+                app:startIconDrawable="@drawable/ic_baseline_star_24"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconTint="@color/themColorRed">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/size12"
-                    app:srcCompat="@drawable/ic_baseline_star_24"
-                    app:tint="@color/themColorRed" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/LoginTextInputLayoutStyle"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/userName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:longClickable="false"
-                    android:paddingTop="@dimen/fieldMargin"
-                    android:theme="@style/LoginTextInputLayoutStyle"
-                    app:startIconTint="@color/themColorRed">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/userName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#00FFFFFF"
-                        android:hint="Name"
-                        android:inputType="textPersonName"
-                        android:textSize="@dimen/ts28" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+                    android:hint="@string/name"
+                    android:inputType="textPersonName" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size20"
+                android:layout_marginStart="@dimen/size30"
                 android:orientation="horizontal">
 
                 <RadioGroup
@@ -133,7 +116,7 @@
                         android:button="@null"
                         android:checked="true"
                         android:gravity="center"
-                        android:text="Male"
+                        android:text="@string/male"
                         android:textColor="@drawable/picker_color"
                         android:textSize="@dimen/ts28" />
 
@@ -147,80 +130,56 @@
                         android:button="@null"
                         android:checked="false"
                         android:gravity="center"
-                        android:text="Female"
+                        android:text="@string/female"
                         android:textSize="@dimen/ts28" />
                 </RadioGroup>
             </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size20"
-                android:background="@drawable/login_button_back"
-                android:orientation="horizontal">
+                android:longClickable="false"
+                android:paddingTop="@dimen/fieldMargin"
+                app:startIconDrawable="@drawable/ic_baseline_star_24"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:endIconTint="@color/weight">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/size12"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/ic_baseline_star_24"
-                    app:tint="@color/themColorRed" />
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/LoginTextInputLayoutStyle"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/dateOfBirth"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@null"
+                    android:clickable="true"
+                    android:drawableEnd="@drawable/ic_calendar"
+                    android:drawableTint="@color/black"
+                    android:focusable="false"
+                    android:hint="@string/date_of_birth"
+                    android:inputType="none"
                     android:longClickable="false"
-                    android:paddingTop="@dimen/fieldMargin"
-                    android:theme="@style/LoginTextInputLayoutStyle"
-                    app:endIconTint="@color/weight">
+                    android:textSize="@dimen/ts28" />
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/dateOfBirth"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#00FFFFFF"
-                        android:clickable="true"
-                        android:drawableEnd="@drawable/ic_calendar"
-                        android:drawableTint="@color/black"
-                        android:focusable="false"
-                        android:hint="Date Of Birth"
-                        android:inputType="none"
-                        android:longClickable="false"
-                        android:textSize="@dimen/ts28" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
 
-            <LinearLayout
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size20"
-                android:background="@drawable/login_button_back"
-                android:orientation="horizontal">
+                android:longClickable="false"
+                android:paddingTop="@dimen/fieldMargin"
+                app:startIconDrawable="@drawable/ic_baseline_star_24"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:startIconTint="@color/themColorRed">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/LoginTextInputLayoutStyle"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:longClickable="false"
-                    android:paddingTop="@dimen/fieldMargin"
-                    android:theme="@style/LoginTextInputLayoutStyle"
-                    app:startIconTint="@color/themColorRed">
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/email"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="#00FFFFFF"
-                        android:hint="Email"
-                        android:inputType="textEmailAddress"
-                        android:textSize="@dimen/ts28" />
-                </com.google.android.material.textfield.TextInputLayout>
-            </LinearLayout>
+
 
             <Button
                 android:id="@+id/signUp"
@@ -228,7 +187,7 @@
                 android:layout_height="@dimen/mainButton"
                 android:layout_marginTop="@dimen/size140"
                 android:backgroundTint="?attr/colorPrimary"
-                android:text="Update"
+                android:text="@string/update"
                 android:textSize="@dimen/size30"
                 app:cornerRadius="@dimen/size40" />
 
@@ -263,7 +222,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Profile Update"
+                    android:text="@string/profile_update"
                     android:textColor="@color/ColorWeight"
                     android:textSize="@dimen/ts38"
                     app:layout_constraintEnd_toEndOf="parent"

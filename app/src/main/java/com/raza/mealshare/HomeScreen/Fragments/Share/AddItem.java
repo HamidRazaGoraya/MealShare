@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,7 +16,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 
-import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -26,21 +26,19 @@ import com.google.gson.Gson;
 import com.raza.mealshare.CustomDialogs.ShowCategoryPicker;
 import com.raza.mealshare.CustomDialogs.ShowConditionPicker;
 import com.raza.mealshare.CustomDialogs.ShowImagePickDialog;
-import com.raza.mealshare.ExtraFiles.Category;
 import com.raza.mealshare.ExtraFiles.CustomToast;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.Model.ProfileInfo;
 import com.raza.mealshare.HomeScreen.Fragments.Share.Models.SelectedImage;
+import com.raza.mealshare.Location.PickUpLocation;
+import com.raza.mealshare.Models.Category;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Services.MyUploadService;
 import com.raza.mealshare.Services.UploadFilesModel;
-import com.raza.mealshare.Services.UploadFilesOrignal;
+import com.raza.mealshare.Utilities.CheckForPermissions;
 import com.raza.mealshare.Utilities.LoadingDialog;
 import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.ActivityAddItemBinding;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -57,10 +55,10 @@ private File mTempCameraPhotoFile;
 private SelectedImage clickedImage;
     private int GalleryImage =103;
     private int CameraImage=104;
-    private Category category=null;
     private LoadingDialog loadingDialog;
     private FirebaseRef ref=new FirebaseRef();
     private final String tag="uploadImages";
+    private Category category;
     private ArrayList<UploadFilesModel> selectedFiles=new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,8 +69,19 @@ private SelectedImage clickedImage;
         profileInfo=new Gson().fromJson(getIntent().getStringExtra("data"),ProfileInfo.class);
         shareOrRequest=getIntent().getIntExtra("starting",1);
         setUpButtons();
+        setUpToolbar();
     }
 
+    private void setUpToolbar() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("New Item");
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return super.onSupportNavigateUp();
+    }
     private void setUpButtons() {
         if (shareOrRequest==1){
             binding.Requested.setChecked(false);
@@ -81,30 +90,16 @@ private SelectedImage clickedImage;
             binding.Share.setChecked(false);
             binding.Requested.setChecked(true);
         }
-        binding.pickCategory.setOnClickListener(new View.OnClickListener() {
+        binding.Category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ShowCategoryPicker showCategoryPicker=new ShowCategoryPicker(new ShowCategoryPicker.Buttons() {
-                    @Override
-                    public void SelectedCategory(Category category) {
-                        AddItem.this.category=category;
-                        binding.CategoryText.setText(category.getName());
-                        Glide.with(AddItem.this).load(Utilities.StorageReference(category.getIcon())).into(binding.CategoryImage);
-                    }
-                });
-                showCategoryPicker.show(getSupportFragmentManager(),"CategoryPick");
-            }
-        });
-        binding.FoodCondition.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShowConditionPicker conditionPicker=new ShowConditionPicker(new ShowConditionPicker.Buttons() {
-                    @Override
-                    public void SelectedCondition(String condition) {
-                        binding.FoodCondition.setText(condition);
-                    }
-                });
-                conditionPicker.show(getSupportFragmentManager(),"Condition");
+               new  ShowCategoryPicker(new ShowCategoryPicker.Buttons() {
+                   @Override
+                   public void SelectedCategory(Category category) {
+                       AddItem.this.category=category;
+                       binding.Category.setText(category.getName());
+                   }
+               }).show(getSupportFragmentManager(),"Category");
             }
         });
         selectedImages=new ArrayList<>();
@@ -130,15 +125,17 @@ private SelectedImage clickedImage;
                     HashMap<String, Object> map=new HashMap<>();
                     map.put(ref.ItemName,binding.ItemName.getText().toString());
                     map.put(ref.ItemDescription,binding.ItemDescription.getText().toString());
-                    map.put(ref.Category,category);
+                    map.put(ref.ItemDescriptionLong,binding.ItemDescriptionLong.getText().toString());
                     map.put(ref.data_status,0);
                     map.put(ref.data_submission_time, FieldValue.serverTimestamp());
-                    map.put(ref.Condition,binding.FoodCondition.getText().toString());
+                    map.put(ref.Condition,"");
                     map.put(ref.Share,binding.ShareOrRequest.getCheckedRadioButtonId()==binding.Share.getId());
                     map.put(ref.user_location,profileInfo.getUser_location());
+                    map.put(ref.Category,category);
                     HashMap<String, Object> userInfo=new HashMap<>();
                     userInfo.put(ref.user_name,profileInfo.getUser_name());
                     userInfo.put(ref.user_email,profileInfo.getUser_email());
+                    userInfo.put(ref.user_profile_pic,profileInfo.getUser_profile_pic());
                     userInfo.put(ref.user_uid, FirebaseAuth.getInstance().getCurrentUser().getUid());
                     map.put(ref.userInfo,userInfo);
                     FirebaseFirestore.getInstance().collection(ref.users).document(FirebaseAuth.getInstance().getCurrentUser().getUid()).collection(ref.AllFoodShared).add(map).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -182,17 +179,28 @@ private SelectedImage clickedImage;
             binding.ItemDescription.requestFocus();
             return false;
         }
-        if (TextUtils.isEmpty(binding.FoodCondition.getText().toString())){
-            new CustomToast(AddItem.this,"Pick Food Condition");
-            binding.FoodCondition.callOnClick();
+        if (TextUtils.isEmpty(binding.Category.getText().toString())){
+            new CustomToast(AddItem.this,"Pick  Category");
+            binding.Category.callOnClick();
             return false;
         }
-        if (category==null){
-            new CustomToast(AddItem.this,"Pick Category");
-            binding.pickCategory.callOnClick();
-            return false;
+        for (int i=0;i<selectedImages.size();i++){
+            if (selectedImages.get(i).isAdded()){
+                return true;
+            }
         }
-        return true;
+        new CustomToast(AddItem.this,"Add One image");
+        return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCameraIntent();
+            }
+        }
     }
 
     private void ShowSelector() {
@@ -204,7 +212,17 @@ private SelectedImage clickedImage;
 
             @Override
             public void SelectCamera() {
-                openCameraIntent();
+                CheckForPermissions.CheckForCameraPermission(AddItem.this, AddItem.this, 101, new CheckForPermissions.Results() {
+                    @Override
+                    public void HavePermission() {
+                        openCameraIntent();
+                    }
+
+                    @Override
+                    public void Requested() {
+
+                    }
+                });
             }
         },"Upload image");
         showImagePickDialog.show(AddItem.this.getSupportFragmentManager(),"camera");

@@ -3,10 +3,18 @@ package com.raza.mealshare.Utilities;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.location.Location;
+import android.text.TextUtils;
+import android.util.Log;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.raza.mealshare.Database.RadiusFiles.RadiusAndCategory;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
+import com.raza.mealshare.HomeScreen.Fragments.Profile.Model.ProfileInfo;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -15,6 +23,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import androidx.annotation.NonNull;
 
 public class Utilities {
     @NotNull
@@ -105,16 +115,14 @@ public class Utilities {
     }
     @NotNull
     public static StorageReference StorageReference(String path){
+        if (TextUtils.isEmpty(path)){
+            return FirebaseStorage.getInstance().getReference("Asd");
+        }
         return FirebaseStorage.getInstance().getReference().child(path);
     }
-    public static int GetSearchRadius(Activity activity){
-        SharedPreferences sharedPreferences=getSharedPreferences(activity);
-        FirebaseRef ref=new FirebaseRef();
-        if (sharedPreferences.contains(ref.SearchRadius)){
-            return sharedPreferences.getInt(ref.SearchRadius,25);
-        }
-        return 25;
-    }
+
+
+
     public static String PostTime(Calendar date){
         Calendar currentTime=Calendar.getInstance();
         if (currentTime.get(Calendar.DAY_OF_YEAR)==date.get(Calendar.DAY_OF_YEAR) && currentTime.get(Calendar.YEAR)==date.get(Calendar.YEAR)){
@@ -124,5 +132,68 @@ public class Utilities {
         }else {
             return new SimpleDateFormat("dd MMM").format(date.getTime())+"\n"+new SimpleDateFormat("HH:mm").format(date.getTime());
         }
+    }
+
+    public static boolean DoesLocationAvailable(Activity context){
+        return getSharedPreferences(context).contains("Location");
+    }
+    public static void SaveLocation(Activity context, LatLng location){
+        getSharedPreferences(context).edit().putString("Location",String.valueOf(location.latitude)+","+String.valueOf(location.longitude)).apply();
+    }
+    public static GeoPoint GetLatLog(Activity activity){
+        if (DoesUserProfileAvailable(activity)){
+            if (UserProfile(activity).getUser_location()!=null){
+                return UserProfile(activity).getUser_location();
+            }else if (DoesLocationAvailable(activity)){
+                String location=getSharedPreferences(activity).getString("Location","");
+                return new GeoPoint(Double.parseDouble(location.split(",")[0]),Double.parseDouble(location.split(",")[1]));
+            }else {
+                return null;
+            }
+        }else {
+            if (DoesLocationAvailable(activity)){
+                String location=getSharedPreferences(activity).getString("Location","");
+                return new GeoPoint(Double.parseDouble(location.split(",")[0]),Double.parseDouble(location.split(",")[1]));
+            }else {
+                return null;
+            }
+
+        }
+    }
+
+    public static ProfileInfo UserProfile(Activity activity){
+        return new Gson().fromJson(getSharedPreferences(activity).getString("ProfileInfo",""),ProfileInfo.class);
+    }
+    public static boolean DoesUserProfileAvailable(Activity context){
+        return getSharedPreferences(context).contains("ProfileInfo");
+    }
+    public static void SaveProfile(Activity activity,ProfileInfo profileInfo){
+         getSharedPreferences(activity).edit().putString("ProfileInfo",new Gson().toJson(profileInfo)).apply();
+    }
+
+    public static int getDistance(@NonNull GeoPoint itemLocation, GeoPoint userLocation) {
+        int inMeter=((int) GeoPointToLocation(itemLocation).distanceTo(GeoPointToLocation(userLocation)));
+
+        int inKM=0;
+        if (inMeter!=0){
+             inKM=inMeter/1000;
+        }
+        Log.i("Distance","meter :" +inMeter+"   "+inKM);
+        return inKM;
+    }
+    private static Location GeoPointToLocation(GeoPoint geoPoint){
+        Location location=  new Location("GPS");
+        location.setLatitude(geoPoint.getLatitude());
+        location.setLongitude(geoPoint.getLongitude());
+        return location;
+    }
+    public static String QuerryString(RadiusAndCategory andCategory,int type){
+        String myString="SELECT * FROM OtherProduct WHERE ";
+        if (!andCategory.Category.equals("ALL")){
+             myString=myString+" CategoryId = "+andCategory.getCategoryId()+" AND";
+        }
+        myString=myString+" Distance < "+andCategory.getRadius()+" AND Share = "+type+" ORDER BY data_submission_time DESC";
+        Log.i("Querry",myString);
+        return myString;
     }
 }

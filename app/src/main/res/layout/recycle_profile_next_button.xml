@@ -21,7 +21,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="1"
-            android:text="系统设定"
             android:textColor="@color/black"
             android:textSize="@dimen/ts32" />
 
@@ -32,53 +31,5 @@
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_baseline_navigate_next_24" />
 
-        <TextView
-            android:id="@+id/secondText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="v0.1"
-            android:textColor="@color/black"
-            android:textSize="@dimen/ts26"
-            android:visibility="gone" />
-
-        <RadioGroup
-            android:id="@+id/yesNo"
-            android:layout_width="@dimen/size130"
-            android:layout_height="@dimen/size60"
-            android:layout_gravity="center"
-            android:layout_marginEnd="@dimen/size16"
-            android:background="@drawable/yes_no_back"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <RadioButton
-                android:id="@+id/noButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/yes_no_switch"
-                android:button="@null"
-                android:checked="true"
-                android:gravity="center"
-                android:text="否"
-                android:textColor="@color/weight"
-                android:textSize="@dimen/ts24" />
-
-            <RadioButton
-                android:id="@+id/yessButton"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="2dp"
-                android:layout_weight="1"
-                android:background="@drawable/yes_no_switch"
-                android:button="@null"
-                android:checked="false"
-                android:gravity="center"
-                android:text="是"
-                android:textColor="@color/themColorGreen"
-                android:textSize="@dimen/ts24" />
-        </RadioGroup>
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

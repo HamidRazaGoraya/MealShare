@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -28,8 +29,10 @@ import com.raza.mealshare.CustomDialogs.ShortCutDialogs;
 import com.raza.mealshare.CustomDialogs.ShowImagePickDialog;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.ExtraFiles.UploadImage;
+import com.raza.mealshare.HomeScreen.Fragments.Share.AddItem;
 import com.raza.mealshare.Intro.IntroImageWizard;
 import com.raza.mealshare.R;
+import com.raza.mealshare.Utilities.CheckForPermissions;
 import com.raza.mealshare.Utilities.LoadingDialog;
 import com.raza.mealshare.Utilities.MyToasts;
 import com.raza.mealshare.Utilities.Utilities;
@@ -140,6 +143,16 @@ public class SignUpEmail extends Fragment implements IOnBackPressed {
         }
         binding.dateOfBirth.setText(Utilities.getDateFormat().format(DateOfBirthCal.getTime()));
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCameraIntent();
+            }
+        }
+    }
+
     private void ShowSelector() {
         ShowImagePickDialog showImagePickDialog=new ShowImagePickDialog(new ShowImagePickDialog.Buttons() {
             @Override
@@ -149,7 +162,17 @@ public class SignUpEmail extends Fragment implements IOnBackPressed {
 
             @Override
             public void SelectCamera() {
-                openCameraIntent();
+                CheckForPermissions.CheckForCameraPermission(requireActivity(), requireContext(), 101, new CheckForPermissions.Results() {
+                    @Override
+                    public void HavePermission() {
+                        openCameraIntent();
+                    }
+
+                    @Override
+                    public void Requested() {
+
+                    }
+                });
             }
         },"Upload image");
         showImagePickDialog.show(requireActivity().getSupportFragmentManager(),"camera");
@@ -245,8 +268,10 @@ public class SignUpEmail extends Fragment implements IOnBackPressed {
     private void updateUI() {
         loadingDialog.dismiss();
         if (firebaseUser!=null){
-            startActivity(new Intent(getContext(), IntroImageWizard.class));
-            requireActivity().finish();
+            if (getContext()!=null){
+                startActivity(new Intent(getContext(), IntroImageWizard.class));
+                requireActivity().finish();
+            }
         }
     }
 

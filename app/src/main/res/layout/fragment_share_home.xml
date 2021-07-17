@@ -36,7 +36,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Share Food"
+                    android:text="@string/share_items"
                     android:textColor="@color/ColorWeight"
                     android:textSize="@dimen/ts38"
                     android:textStyle="bold"
@@ -73,7 +73,7 @@
                     android:checked="true"
                     android:gravity="center"
                     android:padding="0dp"
-                    android:text="Share"
+                    android:text="@string/share"
                     android:textColor="@drawable/share_request_color"
                     android:textSize="12sp" />
 
@@ -89,7 +89,7 @@
                     android:checked="false"
                     android:gravity="center"
                     android:padding="0dp"
-                    android:text="Request"
+                    android:text="@string/request"
                     android:textColor="@drawable/share_request_color"
                     android:textSize="12sp" />
             </RadioGroup>
@@ -134,7 +134,6 @@
                         android:id="@+id/profileUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="razahamid"
                         android:textColor="@color/black"
                         android:textSize="@dimen/ts32" />
 
@@ -143,7 +142,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="Edit PickUp Location"
+                        android:text="@string/edit_pickup_location"
                         android:textColor="@color/red_300" />
 
                     <LinearLayout
@@ -156,7 +155,6 @@
                             android:id="@+id/LevelName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 Level "
                             android:textColor="@color/ColorBlack"
                             android:textSize="@dimen/ts24"
                             android:textStyle="bold" />
@@ -166,7 +164,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="(0 points)"
                             android:textColor="@color/ColorBlack"
                             android:textSize="@dimen/ts24" />
                     </LinearLayout>
@@ -176,7 +173,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="(20 points for next level)"
                         android:textSize="12sp"
                         android:visibility="gone" />
                 </LinearLayout>
@@ -196,7 +192,7 @@
         android:paddingTop="10dp"
         android:paddingEnd="20dp"
         android:paddingBottom="10dp"
-        android:text="My item list"
+        android:text="@string/my_item_list"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />

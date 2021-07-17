@@ -7,11 +7,10 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.google.gson.Gson;
-import com.raza.mealshare.ExtraFiles.Category;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.ExtraFiles.SettingsModel;
-import com.raza.mealshare.HomeScreen.Fragments.Share.Adopter.CategoryAdopter;
 import com.raza.mealshare.HomeScreen.Fragments.Share.Adopter.ConditionAdopter;
+import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.DialogSelectCategoryBinding;
 
@@ -38,7 +37,7 @@ public class ShowConditionPicker extends DialogFragment {
         ConditionAdopter adopter=new ConditionAdopter(requireContext(),settingsModel.getCondition());
         binding.recycleView.setLayoutManager(new LinearLayoutManager(requireContext()));
         binding.recycleView.setAdapter(adopter);
-        binding.title.setText("Select food condition");
+        binding.title.setText(R.string.select_condition);
         adopter.setClickListener(new ConditionAdopter.ItemClickListener() {
             @Override
             public void onItemClick(String condition) {

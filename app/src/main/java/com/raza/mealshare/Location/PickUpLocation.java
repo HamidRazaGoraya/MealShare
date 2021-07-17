@@ -1,12 +1,16 @@
 package com.raza.mealshare.Location;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -42,6 +46,8 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.raza.mealshare.CustomDialogs.CustomToast;
@@ -49,7 +55,7 @@ import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.CheckForPermissions;
 import com.raza.mealshare.Utilities.LoadingDialog;
-import com.raza.mealshare.databinding.ActivityLoginActivityyBinding;
+import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.ActivityPickUpLocationBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -59,7 +65,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
-public class PickUpLocation extends FragmentActivity implements OnMapReadyCallback {
+public class PickUpLocation extends AppCompatActivity implements OnMapReadyCallback {
     private LatLng currentLatLog = null;
     private GoogleMap mMap;
     private View mMapView;
@@ -81,18 +87,23 @@ public class PickUpLocation extends FragmentActivity implements OnMapReadyCallba
         assert mapFragment != null;
         mapFragment.getMapAsync(this);
         mMapView=mapFragment.getView();
-        binding.backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        setUpToolbar();
         binding.saveLocation.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 saveAndExit();
             }
         });
+    }
+    private void setUpToolbar() {
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setTitle("New Item");
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+        saveAndExit();
+        return super.onSupportNavigateUp();
     }
 
     /**
@@ -129,6 +140,50 @@ public class PickUpLocation extends FragmentActivity implements OnMapReadyCallba
           CheckForLocation();
 
     }
+
+    @SuppressLint("MissingPermission")
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode==REQUEST_CHECK_SETTINGS){
+            if (resultCode==Activity.RESULT_OK){
+                LocationRequest locationRequest = LocationRequest.create();
+                locationRequest.setInterval(10000);
+                locationRequest.setFastestInterval(5000);
+                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                loadingDialog.show();
+                fusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()){
+                            if (task.getResult()!=null){
+                                Location location=task.getResult();
+                                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                                mMap.animateCamera(cameraUpdate);
+                            }
+                        }
+                    }
+                });
+                fusedLocationClient.requestLocationUpdates(locationRequest, new LocationCallback() {
+                    @Override
+                    public void onLocationResult(@NonNull LocationResult locationResult) {
+                        for (Location location : locationResult.getLocations()) {
+                            loadingDialog.dismiss();
+                            LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                            CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                            mMap.animateCamera(cameraUpdate);
+                            fusedLocationClient.removeLocationUpdates(this);
+                            return;
+                        }
+                    }
+                }, Looper.getMainLooper());
+            }
+        }
+
+    }
+
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -176,6 +231,19 @@ public class PickUpLocation extends FragmentActivity implements OnMapReadyCallba
             @Override
             public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
                 loadingDialog.show();
+                fusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()){
+                            if (task.getResult()!=null){
+                                Location location=task.getResult();
+                                LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
+                                CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+                                mMap.animateCamera(cameraUpdate);
+                            }
+                        }
+                    }
+                });
                 fusedLocationClient.requestLocationUpdates(locationRequest, new LocationCallback() {
                     @Override
                     public void onLocationResult(@NonNull LocationResult locationResult) {
@@ -211,10 +279,22 @@ public class PickUpLocation extends FragmentActivity implements OnMapReadyCallba
             }
         });
     }
+
+    @Override
+    public void onBackPressed() {
+        saveAndExit();
+        super.onBackPressed();
+    }
+
     private void saveAndExit() {
         if (currentLatLog!=null){
             if (address.length()<5){
                 new CustomToast(PickUpLocation.this,"Address too short");
+                return;
+            }
+            Utilities.SaveLocation(PickUpLocation.this,currentLatLog);
+            if (FirebaseAuth.getInstance().getCurrentUser()==null){
+                finish();
                 return;
             }
             loadingDialog.show();

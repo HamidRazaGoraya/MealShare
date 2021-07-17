@@ -47,8 +47,8 @@
                 android:paddingTop="2dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="2dp"
-                android:text="Sign Out"
-                android:textSize="@dimen/size30"
+                android:text="@string/sign_out"
+                android:textSize="@dimen/ts28"
                 app:cornerRadius="10dp"
                 app:iconPadding="0dp"
                 app:layout_constraintEnd_toStartOf="@+id/editProfile"
@@ -65,8 +65,8 @@
                 android:paddingTop="2dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="2dp"
-                android:text="Edit Profile"
-                android:textSize="@dimen/size30"
+                android:text="@string/edit_profile"
+                android:textSize="@dimen/ts28"
                 app:cornerRadius="10dp"
                 app:iconPadding="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -93,7 +93,6 @@
                         android:id="@+id/profileUserName"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="razahamid"
                         android:textColor="@color/black"
                         android:textSize="@dimen/ts50" />
 
@@ -102,7 +101,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"
-                        android:text="Edit PickUp Location"
+                        android:text="@string/edit_pickup_location"
                         android:textColor="@color/red_300" />
 
                     <LinearLayout
@@ -115,7 +114,6 @@
                             android:id="@+id/LevelName"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="1 Level "
                             android:textColor="@color/ColorBlack"
                             android:textStyle="bold" />
 
@@ -124,7 +122,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="5dp"
-                            android:text="(0 points)"
                             android:textColor="@color/ColorBlack" />
                     </LinearLayout>
 
@@ -133,7 +130,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="2dp"
-                        android:text="(20 points for next level)"
                         android:textSize="12sp" />
                 </LinearLayout>
 

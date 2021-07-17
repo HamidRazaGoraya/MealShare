@@ -58,12 +58,7 @@ public class UploadImage {
         byte[] data = baos.toByteArray();
         storageReference.putBytes(data);
     }
-    public static void UploadThumbnailImage(@NotNull Uri file, @NotNull StorageReference storageReference){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        getThumbnailImage(new File(file.getPath())).compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] data = baos.toByteArray();
-        storageReference.putBytes(data);
-    }
+
     public interface Upload{
         void Image(Bitmap bitmap);
     }

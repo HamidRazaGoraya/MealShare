@@ -1,60 +1,65 @@
 package com.raza.mealshare.HomeScreen.Fragments.Search;
 
-import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioGroup;
 
-import com.raza.mealshare.CustomDialogs.CustomToast;
-import com.raza.mealshare.CustomDialogs.RadiusPicker;
+import com.google.gson.Gson;
+import com.raza.mealshare.CustomDialogs.GetCategoryWithFIlter;
+import com.raza.mealshare.Database.AllDataBaseConstant;
+import com.raza.mealshare.Database.RadiusFiles.AllRadius;
+import com.raza.mealshare.Database.RadiusFiles.RadiusAndCategory;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
+import com.raza.mealshare.ExtraFiles.SettingsModel;
 import com.raza.mealshare.HomeScreen.Fragments.Search.Fragments.Requested;
 import com.raza.mealshare.HomeScreen.Fragments.Search.Fragments.Share;
-import com.raza.mealshare.Location.PickUpLocation;
+import com.raza.mealshare.Models.Category;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.FragmentSearchItemsBinding;
+
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
 public class SearchFragment extends Fragment {
-private FragmentSearchItemsBinding binding;
-private int LocationUpdate;
+
+    private FragmentSearchItemsBinding binding;
     private Fragment current;
     private FragmentManager fragmentManager;
     private Share shareItemsFragment =new Share();
     private Requested requestedItemFragment =new Requested();
     private FirebaseRef ref=new FirebaseRef();
+
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding=FragmentSearchItemsBinding.inflate(inflater,container,false);
         setUpButtons();
         return binding.getRoot();
     }
-
     private void setUpButtons() {
-        binding.location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivityForResult(new Intent(requireActivity(), PickUpLocation.class),LocationUpdate);
-            }
-        });
         binding.filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                RadiusPicker radiusPicker=new RadiusPicker(new RadiusPicker.Buttons() {
+                SettingsModel settingsModel= new Gson().fromJson(Utilities.getSharedPreferences(requireActivity()).getString(ref.Settings,""),SettingsModel.class);
+                AsyncTask.execute(new Runnable() {
                     @Override
-                    public void SelectedRadius(int radius) {
-                        Utilities.getSharedPreferences(requireActivity()).edit().putInt(ref.SearchRadius,radius).apply();
+                    public void run() {
+                        List<RadiusAndCategory> andCategories= AllDataBaseConstant.getInstance(requireContext()).allRadius().getAllOnce();
+                        if (andCategories.size()>0){
+                            new GetCategoryWithFIlter(settingsModel.getCategory(),andCategories.get(0)).show(getChildFragmentManager(),"Filter");
+                        }else {
+                            RadiusAndCategory andCategory=new RadiusAndCategory("ALL",0,250);
+                            new GetCategoryWithFIlter(settingsModel.getCategory(),andCategory).show(getChildFragmentManager(),"Filter");
+                        }
                     }
                 });
-                radiusPicker.show(getChildFragmentManager(),"pickRadius");
             }
         });
-
         fragmentManager=getChildFragmentManager();
         Fragment oldFragment = fragmentManager.findFragmentByTag("requestedItemFragment");
         if (oldFragment != null) {
@@ -80,6 +85,5 @@ private int LocationUpdate;
             }
         });
     }
-
 
 }

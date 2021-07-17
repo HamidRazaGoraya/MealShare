@@ -2,6 +2,7 @@ package com.raza.mealshare.HomeScreen.Fragments.Profile;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -27,7 +28,9 @@ import com.raza.mealshare.CustomDialogs.ShowImagePickDialog;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.ExtraFiles.UploadImage;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.Model.ProfileInfo;
+import com.raza.mealshare.HomeScreen.Fragments.Share.AddItem;
 import com.raza.mealshare.R;
+import com.raza.mealshare.Utilities.CheckForPermissions;
 import com.raza.mealshare.Utilities.LoadingDialog;
 import com.raza.mealshare.Utilities.MyToasts;
 import com.raza.mealshare.Utilities.Utilities;
@@ -189,6 +192,16 @@ private Calendar DateOfBirthCal=null;
             }
         });
     }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == 101) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openCameraIntent();
+            }
+        }
+    }
+
     private void ShowSelector() {
         ShowImagePickDialog showImagePickDialog=new ShowImagePickDialog(new ShowImagePickDialog.Buttons() {
             @Override
@@ -198,7 +211,17 @@ private Calendar DateOfBirthCal=null;
 
             @Override
             public void SelectCamera() {
-                openCameraIntent();
+                CheckForPermissions.CheckForCameraPermission(UpdateUserProfile.this, UpdateUserProfile.this, 101, new CheckForPermissions.Results() {
+                    @Override
+                    public void HavePermission() {
+                        openCameraIntent();
+                    }
+
+                    @Override
+                    public void Requested() {
+
+                    }
+                });
             }
         },"Upload image");
         showImagePickDialog.show(UpdateUserProfile.this.getSupportFragmentManager(),"camera");

@@ -7,10 +7,10 @@ import android.os.Bundle;
 import android.view.Window;
 
 import com.google.gson.Gson;
-import com.raza.mealshare.ExtraFiles.Category;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.ExtraFiles.SettingsModel;
 import com.raza.mealshare.HomeScreen.Fragments.Share.Adopter.CategoryAdopter;
+import com.raza.mealshare.Models.Category;
 import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.DialogSelectCategoryBinding;
 

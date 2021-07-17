@@ -29,7 +29,6 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="確定要退出"
                 android:textColor="@color/black"
                 android:textSize="@dimen/ts38" />
         </LinearLayout>
@@ -47,7 +46,6 @@
                 android:layout_margin="@dimen/size12"
                 android:layout_weight="1"
                 android:backgroundTint="@color/themColorRed"
-                android:text="否"
                 android:textColor="@color/weight"
                 android:visibility="visible"
                 app:cornerRadius="@dimen/size40" />
@@ -59,7 +57,6 @@
                 android:layout_margin="@dimen/size12"
                 android:layout_weight="1"
                 android:backgroundTint="@color/themColorGreen"
-                android:text="是"
                 android:textColor="@color/weight"
                 android:visibility="visible"
                 app:cornerRadius="@dimen/size40" />

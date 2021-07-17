@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:text="Welcome To Meal Share"
+                android:text="@string/welcome_to_share_items"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold" />
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/spacing_medium"
-                android:text="Sign in to continue"
+                android:text="@string/sign_in_to_continue"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/blue_grey_300" />
 
@@ -59,7 +59,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Phone Number"
+                android:text="@string/phone_number"
                 android:textAlignment="center"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Caption"
                 android:textColor="@color/blue_grey_200" />
@@ -117,7 +117,7 @@
                 android:layout_marginRight="-4dp"
                 android:background="@drawable/new_back_button_ui"
                 android:gravity="center"
-                android:text="Sign In"
+                android:text="@string/sign_in"
                 android:textAllCaps="false"
                 android:textColor="@android:color/white"
                 android:textSize="16sp"
@@ -143,7 +143,7 @@
                     android:layout_marginStart="15dp"
                     android:layout_marginEnd="15dp"
                     android:gravity="center"
-                    android:text="Or" />
+                    android:text="@string/or" />
 
                 <View
                     android:layout_width="match_parent"
@@ -179,7 +179,7 @@
                     android:layout_marginEnd="36dp"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Login with Google"
+                    android:text="@string/login_with_google"
                     android:textColor="@color/ColorWeight"
                     android:textSize="16sp"
                     android:textStyle="bold" />
