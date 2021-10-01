@@ -53,7 +53,7 @@ public class SearchFragment extends Fragment {
                         if (andCategories.size()>0){
                             new GetCategoryWithFIlter(settingsModel.getCategory(),andCategories.get(0)).show(getChildFragmentManager(),"Filter");
                         }else {
-                            RadiusAndCategory andCategory=new RadiusAndCategory("ALL",0,250);
+                            RadiusAndCategory andCategory=new RadiusAndCategory("ALL",0,6000);
                             new GetCategoryWithFIlter(settingsModel.getCategory(),andCategory).show(getChildFragmentManager(),"Filter");
                         }
                     }

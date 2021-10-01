@@ -9,6 +9,9 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        configurations.all {
+            resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
+        }
         applicationId "com.raza.mealshare"
         minSdkVersion 22
         targetSdkVersion 30

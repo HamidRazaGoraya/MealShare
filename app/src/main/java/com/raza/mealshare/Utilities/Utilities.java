@@ -4,17 +4,30 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
+import com.raza.mealshare.Database.AllDataBaseConstant;
+import com.raza.mealshare.Database.AllProductsFills.TrackAllItems;
+import com.raza.mealshare.Database.MessagesFiles.AllUsersDeo;
+import com.raza.mealshare.Database.MessagesFiles.UserDetails;
+import com.raza.mealshare.Database.RadiusFiles.AllRadius;
 import com.raza.mealshare.Database.RadiusFiles.RadiusAndCategory;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.Model.ProfileInfo;
+import com.raza.mealshare.Location.PickUpLocation;
+import com.raza.mealshare.Models.UserInfo;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -22,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import androidx.annotation.NonNull;
@@ -139,6 +153,22 @@ public class Utilities {
     }
     public static void SaveLocation(Activity context, LatLng location){
         getSharedPreferences(context).edit().putString("Location",String.valueOf(location.latitude)+","+String.valueOf(location.longitude)).apply();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                AllRadius radius= AllDataBaseConstant.getInstance(context).allRadius();
+                List<RadiusAndCategory> radiusAndCategories=radius.getAllOnce();
+                if (radiusAndCategories.size()==0){
+                    radius.insert(new RadiusAndCategory("ALL",1,6000));
+                }
+            }
+        });
+        if (Utilities.DoesUserProfileAvailable(context)|| Utilities.DoesLocationAvailable(context)){
+            if (FirebaseAuth.getInstance().getCurrentUser()!=null){
+                TrackAllItems.GetAllMyItems(context,FirebaseAuth.getInstance().getCurrentUser());
+            }
+            TrackAllItems.GetAllOtherItems(context);
+        }
     }
     public static GeoPoint GetLatLog(Activity activity){
         if (DoesUserProfileAvailable(activity)){
@@ -195,5 +225,33 @@ public class Utilities {
         myString=myString+" Distance < "+andCategory.getRadius()+" AND Share = "+type+" ORDER BY data_submission_time DESC";
         Log.i("Querry",myString);
         return myString;
+    }
+
+    public static void DownloadProfile(String userId,Context context){
+        FirebaseRef ref=new FirebaseRef();
+        FirebaseFirestore.getInstance().collection(ref.users).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()){
+                    try {
+                        UserInfo userInfo=task.getResult().toObject(UserInfo.class).withId(task.getResult().getId());
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                AllUsersDeo allUsersDeo= AllDataBaseConstant.getInstance(context).allUsersDeo();
+                                if (allUsersDeo.checkUser(userInfo.getUser_uid()).size()>0){
+                                    allUsersDeo.update(new UserDetails(userInfo));
+                                }else {
+                                    allUsersDeo.insert(new UserDetails(userInfo));
+                                }
+                            }
+                        });
+                    }catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+
     }
 }

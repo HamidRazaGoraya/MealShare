@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 AllRadius radius=AllDataBaseConstant.getInstance(MainActivity.this).allRadius();
                 List<RadiusAndCategory> radiusAndCategories=radius.getAllOnce();
                 if (radiusAndCategories.size()==0){
-                    radius.insert(new RadiusAndCategory("ALL",1,250));
+                    radius.insert(new RadiusAndCategory("ALL",1,6000));
                 }
             }
         });

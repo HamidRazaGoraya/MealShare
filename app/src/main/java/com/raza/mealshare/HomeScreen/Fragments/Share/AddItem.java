@@ -10,11 +10,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -41,10 +44,15 @@ import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.ActivityAddItemBinding;
 
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Objects;
+
+import static android.content.Intent.CATEGORY_OPENABLE;
 
 public class AddItem extends AppCompatActivity {
 private ActivityAddItemBinding binding;
@@ -169,13 +177,13 @@ private SelectedImage clickedImage;
     }
 
     private boolean Varified() {
-        if (binding.ItemName.getText().toString().replace(" ","").length()<4){
-            binding.ItemName.setError("Minim 4 Characters required");
+        if (binding.ItemName.getText().toString().replace(" ","").length()<2){
+            binding.ItemName.setError("Minim 2 Characters required");
             binding.ItemName.requestFocus();
             return false;
         }
-        if (binding.ItemDescription.getText().toString().replace(" ","").length()<10){
-            binding.ItemDescription.setError("Minim 10 Characters required");
+        if (binding.ItemDescription.getText().toString().replace(" ","").length()<4){
+            binding.ItemDescription.setError("Minim 4 Characters required");
             binding.ItemDescription.requestFocus();
             return false;
         }
@@ -199,6 +207,11 @@ private SelectedImage clickedImage;
         if (requestCode == 101) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openCameraIntent();
+            }
+        }else {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Toast.makeText(AddItem.this,"Permission required",Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -231,22 +244,43 @@ private SelectedImage clickedImage;
         //Todo Gallery Images
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(CATEGORY_OPENABLE);
+        intent.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         startActivityForResult(Intent.createChooser(intent,"Select Picture"), GalleryImage);
+    }
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        mTempCameraPhotoFile= File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+        return mTempCameraPhotoFile;
     }
 
     private void openCameraIntent() {
-        Intent pictureIntent = new Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE);
-        if(pictureIntent.resolveActivity(getPackageManager()) != null){
-            //Create a file to store the image
-            mTempCameraPhotoFile = new File(getFilesDir()+ "/" + Utilities.AudioFileName().format(Calendar.getInstance().getTime())+ ".jpg");
-            Uri photoURI = FileProvider.getUriForFile(AddItem.this, "com.raza.mealshare.provider", mTempCameraPhotoFile);
-            pictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
-                    photoURI);
-            startActivityForResult(pictureIntent,
-                    CameraImage);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            // Create the File where the photo should go
+            File photoFile = null;
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+              ex.printStackTrace();
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.raza.mealshare.provider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, CameraImage);
+            }
         }
     }
     @Override
@@ -257,6 +291,9 @@ private SelectedImage clickedImage;
             Log.i("Data","Got Data3");
             try {
                 if(resultCode == Activity.RESULT_OK) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                        getContentResolver().takePersistableUriPermission(data.getData(), Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    }
                     clickedImage.AddImage(data.getData(),AddItem.this);
                 }
             }catch (Exception e){
@@ -268,6 +305,7 @@ private SelectedImage clickedImage;
             }
         }
     }
+
 
 
 

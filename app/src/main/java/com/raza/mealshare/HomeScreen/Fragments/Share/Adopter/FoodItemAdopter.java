@@ -55,20 +55,38 @@ public class FoodItemAdopter extends RecyclerView.Adapter<FoodItemAdopter.ViewHo
         holder.Description.setText("\t"+postedItem.getItemDescription());
         holder.Condition.setText(postedItem.getCondition());
         if (postedItem.getAllImages()!=null){
-            for (int i=0;i<postedItem.getAllImages().size();i++){
-                holder.Cards.get(i).ShowImage(postedItem.getAllImages().get(i).getData_thumbnail_storage_path(), mContext, new ImageAndCard.Failed() {
-                    @Override
-                    public void reload() {
-                        notifyDataSetChanged();
-                    }
-                });
-                int finalI = i;
-                holder.Cards.get(i).getCardView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mClickListener.OnImageClick(postedItem.getAllImages().get(finalI));
-                    }
-                });
+            if (postedItem.getAllImages().size()<=3){
+                for (int i=0;i<postedItem.getAllImages().size();i++){
+                    holder.Cards.get(i).ShowImage(postedItem.getAllImages().get(i).getData_thumbnail_storage_path(), mContext, new ImageAndCard.Failed() {
+                        @Override
+                        public void reload() {
+                            notifyDataSetChanged();
+                        }
+                    });
+                    int finalI = i;
+                    holder.Cards.get(i).getCardView().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mClickListener.OnImageClick(postedItem.getAllImages().get(finalI));
+                        }
+                    });
+                }
+            }else {
+                for (int i=0;i<3;i++){
+                    holder.Cards.get(i).ShowImage(postedItem.getAllImages().get(i).getData_thumbnail_storage_path(), mContext, new ImageAndCard.Failed() {
+                        @Override
+                        public void reload() {
+                            notifyDataSetChanged();
+                        }
+                    });
+                    int finalI = i;
+                    holder.Cards.get(i).getCardView().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mClickListener.OnImageClick(postedItem.getAllImages().get(finalI));
+                        }
+                    });
+                }
             }
         }
         Calendar time = Calendar.getInstance();

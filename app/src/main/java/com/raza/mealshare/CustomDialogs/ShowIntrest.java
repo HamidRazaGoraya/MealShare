@@ -6,7 +6,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
+import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.databinding.ShowIntrestDialogBinding;
 import com.raza.mealshare.databinding.SignInToViewBinding;
@@ -29,6 +31,7 @@ public class ShowIntrest extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         AlertDialog.Builder builder = new AlertDialog.Builder(requireActivity());
         binding=ShowIntrestDialogBinding.inflate(requireActivity().getLayoutInflater());
+
        binding.Cancel.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {

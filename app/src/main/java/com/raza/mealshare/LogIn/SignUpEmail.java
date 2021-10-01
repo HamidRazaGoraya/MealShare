@@ -29,8 +29,7 @@ import com.raza.mealshare.CustomDialogs.ShortCutDialogs;
 import com.raza.mealshare.CustomDialogs.ShowImagePickDialog;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.ExtraFiles.UploadImage;
-import com.raza.mealshare.HomeScreen.Fragments.Share.AddItem;
-import com.raza.mealshare.Intro.IntroImageWizard;
+import com.raza.mealshare.HomeScreen.Home;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.CheckForPermissions;
 import com.raza.mealshare.Utilities.LoadingDialog;
@@ -269,7 +268,7 @@ public class SignUpEmail extends Fragment implements IOnBackPressed {
         loadingDialog.dismiss();
         if (firebaseUser!=null){
             if (getContext()!=null){
-                startActivity(new Intent(getContext(), IntroImageWizard.class));
+                startActivity(new Intent(getContext(), Home.class));
                 requireActivity().finish();
             }
         }

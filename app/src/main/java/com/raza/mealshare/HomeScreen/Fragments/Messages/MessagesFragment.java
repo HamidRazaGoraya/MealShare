@@ -30,6 +30,7 @@ import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Fragments.Messages.Adopter.HomeMessagesAdopter;
 import com.raza.mealshare.Models.UserInfo;
 import com.raza.mealshare.R;
+import com.raza.mealshare.Utilities.Utilities;
 import com.raza.mealshare.databinding.FragmentMessagesBinding;
 
 import org.jetbrains.annotations.NotNull;
@@ -82,15 +83,17 @@ public class MessagesFragment extends Fragment {
                     AsyncTask.execute(new Runnable() {
                         @Override
                         public void run() {
-                          List<Messages>  singleMessage=  AllDataBaseConstant.getInstance(requireContext()).allMessagesDeo().getLastMessByConversationId(messages.get(finalI).ConversationsId);
-                          if (singleMessage.size()>0){
-                              requireActivity().runOnUiThread(new Runnable() {
-                                  @Override
-                                  public void run() {
-                                      adopter.insertItems(singleMessage.get(0));
-                                  }
-                              });
-                          }
+                         if (getContext()!=null){
+                             List<Messages>  singleMessage=  AllDataBaseConstant.getInstance(requireContext()).allMessagesDeo().getLastMessByConversationId(messages.get(finalI).ConversationsId);
+                             if (singleMessage.size()>0){
+                                 requireActivity().runOnUiThread(new Runnable() {
+                                     @Override
+                                     public void run() {
+                                         adopter.insertItems(singleMessage.get(0));
+                                     }
+                                 });
+                             }
+                         }
                         }
                     });
                 }
@@ -115,29 +118,9 @@ public class MessagesFragment extends Fragment {
 
             @Override
             public void DownloadProfile(String userId) {
-                 FirebaseFirestore.getInstance().collection(ref.users).document(userId).get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-                     @Override
-                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                          if (task.isSuccessful()){
-                              try {
-                                  UserInfo userInfo=task.getResult().toObject(UserInfo.class).withId(task.getResult().getId());
-                                  AsyncTask.execute(new Runnable() {
-                                      @Override
-                                      public void run() {
-                                          AllUsersDeo allUsersDeo= AllDataBaseConstant.getInstance(requireContext()).allUsersDeo();
-                                          if (allUsersDeo.checkUser(userInfo.getUser_uid()).size()>0){
-                                              allUsersDeo.update(new UserDetails(userInfo));
-                                          }else {
-                                              allUsersDeo.insert(new UserDetails(userInfo));
-                                          }
-                                      }
-                                  });
-                              }catch (Exception e){
-                                  e.printStackTrace();
-                              }
-                          }
-                     }
-                 });
+                if (getContext()!=null){
+                    Utilities.DownloadProfile(userId,requireContext());
+                }
             }
         });
     }

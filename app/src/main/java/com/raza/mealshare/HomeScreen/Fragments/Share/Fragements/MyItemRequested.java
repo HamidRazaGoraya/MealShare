@@ -66,6 +66,9 @@ public class MyItemRequested extends Fragment {
                         foodItemAdopter.deleteAllItems();
                         binding.emptyList.setVisibility(View.VISIBLE);
                         if (myProducts!=null){
+                            if (myProducts.size()>0){
+                                binding.emptyList.setVisibility(View.GONE);
+                            }
                             foodItemAdopter.UpdateAll(myProducts);
                         }
                     }catch (Exception e){

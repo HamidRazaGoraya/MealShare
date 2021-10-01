@@ -71,6 +71,9 @@ public class MyItemShare extends Fragment {
                         foodItemAdopter.deleteAllItems();
                         binding.emptyList.setVisibility(View.VISIBLE);
                         if (myProducts!=null){
+                            if (myProducts.size()>0){
+                                binding.emptyList.setVisibility(View.VISIBLE);
+                            }
                             foodItemAdopter.UpdateAll(myProducts);
                         }
                     }catch (Exception e){

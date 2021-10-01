@@ -41,6 +41,7 @@ import com.raza.mealshare.Database.AllDataBaseConstant;
 import com.raza.mealshare.Database.AllProductsFills.AllFavoritItemsDeo;
 import com.raza.mealshare.Database.AllProductsFills.MyFavoruitProduct;
 import com.raza.mealshare.Database.AllProductsFills.OtherProduct;
+import com.raza.mealshare.Database.MessagesFiles.UserDetails;
 import com.raza.mealshare.ExtraFiles.CustomToast;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.Model.ProfileInfo;
@@ -59,7 +60,6 @@ import java.util.List;
 public class ItemDetails extends AppCompatActivity {
     private ActivityItemDetailsBinding binding;
     private ViewPager viewPager;
-    private LinearLayout layout_dots;
     private AdapterImageSlider adapterImageSlider;
     private OtherProduct otherProduct;
     private FirebaseRef ref=new FirebaseRef();
@@ -87,12 +87,26 @@ public class ItemDetails extends AppCompatActivity {
         binding.itamName.setText(otherProduct.getItemName());
         binding.ShortDescription.setText(otherProduct.getItemDescription());
         binding.longDescription.setText(otherProduct.ItemDescriptionLong);
+
         if (otherProduct.getUserInfo()!=null){
             if (otherProduct.getUserInfo().getUser_profile_pic()!=null){
-                if (TextUtils.isEmpty(otherProduct.getUserInfo().getUser_profile_pic())){
-                    Glide.with(this).load(Utilities.StorageReference(otherProduct.getUserInfo().getUser_profile_pic())).into(binding.posterImage);
-                }
                 binding.posterName.setText(otherProduct.getUserInfo().getUser_name());
+            }
+            try {
+                AllDataBaseConstant.getInstance(this).allUsersDeo().findUserByUid(otherProduct.getUserInfo().getUser_uid()).observeForever(new Observer<List<UserDetails>>() {
+                    @Override
+                    public void onChanged(List<UserDetails> userDetails) {
+                        if (userDetails.size()==0){
+                            Utilities.DownloadProfile(otherProduct.getUserInfo().getUser_uid(),ItemDetails.this);
+                        }else {
+                            if (userDetails.get(0).user_profile_pic!=null){
+                                Glide.with(ItemDetails.this).load(Utilities.StorageReference(userDetails.get(0).user_profile_pic)).placeholder(getResources().getDrawable(R.drawable.profile_selected)).into(binding.posterImage);
+                            }
+                        }
+                    }
+                });
+            }catch (Exception e){
+                e.printStackTrace();
             }
         }
         binding.sendMessage.setOnClickListener(new View.OnClickListener() {
@@ -157,16 +171,15 @@ public class ItemDetails extends AppCompatActivity {
                 }).show(getSupportFragmentManager(),"Interest");
             }
         });
-        layout_dots = (LinearLayout) findViewById(R.id.layout_dots);
         viewPager = (ViewPager) findViewById(R.id.pager);
         adapterImageSlider = new AdapterImageSlider(this, new ArrayList<All_Images>());
 
         adapterImageSlider.setItems(otherProduct.getAllImages());
         viewPager.setAdapter(adapterImageSlider);
-
+        binding.layoutDots.setViewPager(viewPager);
+        binding.layoutDots.setCount(otherProduct.getAllImages().size());
         // displaying selected image first
         viewPager.setCurrentItem(0);
-        addBottomDots(layout_dots, adapterImageSlider.getCount(), 0);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int pos, float positionOffset, int positionOffsetPixels) {
@@ -174,7 +187,7 @@ public class ItemDetails extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int pos) {
-                addBottomDots(layout_dots, adapterImageSlider.getCount(), pos);
+                binding.layoutDots.setSelection(pos);
             }
 
             @Override
@@ -210,25 +223,6 @@ public class ItemDetails extends AppCompatActivity {
 
     }
 
-    private void addBottomDots(LinearLayout layout_dots, int size, int current) {
-        ImageView[] dots = new ImageView[size];
-
-        layout_dots.removeAllViews();
-        for (int i = 0; i < dots.length; i++) {
-            dots[i] = new ImageView(this);
-            int width_height = 15;
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(new ViewGroup.LayoutParams(width_height, width_height));
-            params.setMargins(10, 10, 10, 10);
-            dots[i].setLayoutParams(params);
-            dots[i].setImageResource(R.drawable.shape_circle);
-            dots[i].setColorFilter(ContextCompat.getColor(this, R.color.overlay_dark_10), PorterDuff.Mode.SRC_ATOP);
-            layout_dots.addView(dots[i]);
-        }
-
-        if (dots.length > 0) {
-            dots[current].setColorFilter(ContextCompat.getColor(this, R.color.colorPrimaryLight), PorterDuff.Mode.SRC_ATOP);
-        }
-    }
 
 
     private static class AdapterImageSlider extends PagerAdapter {

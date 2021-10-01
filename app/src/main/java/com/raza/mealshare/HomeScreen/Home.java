@@ -55,13 +55,13 @@ public class Home extends AppCompatActivity {
         navView = findViewById(R.id.nav_view);
         SetUpNavigation();
         getSettings();
-
+        checkForLocation();
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        checkForLocation();
+    protected void onStart() {
+        super.onStart();
+
     }
 
     private void checkForLocation() {

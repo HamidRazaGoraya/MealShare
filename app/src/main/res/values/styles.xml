@@ -1,4 +1,4 @@
-<resources>
+  <resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme2" parent="Theme.MaterialComponents.Light.DarkActionBar">
@@ -6,6 +6,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
     <style name="DialogLoadingTheme">
         <item name="android:windowFrame">@null</item>
@@ -23,13 +24,26 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
 
     </style>
+
+      <style name="splashThem" parent="AppTheme2">
+          <item name="windowActionBar">false</item>
+          <item name="windowNoTitle">true</item>
+          <item name="colorPrimary">@color/splash</item>
+          <item name="colorPrimaryDark">@color/splash</item>
+          <item name="colorAccent">@color/splash</item>
+          <item name="android:navigationBarColor">@color/splash</item>
+
+      </style>
+
     <style name="AppTheme" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="actionMenuTextColor">@color/weight</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
     <style name="ThemeToolbar" parent="Theme.MaterialComponents.Light">
       <item name="colorControlNormal">@color/ColorWeight</item>
@@ -58,10 +72,11 @@
         <item name="android:background">@color/black_overlay</item>
     </style>
     <style name="SplashTheme" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="android:windowBackground">@drawable/splash</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/splash</item>
+        <item name="colorPrimary">@color/splash</item>
+        <item name="colorPrimaryDark">@color/splash</item>
+        <item name="colorAccent">@color/splash</item>
+        <item name="android:navigationBarColor">@color/splash</item>
     </style>
 
     <style name="AddressBookStyle" parent="Theme.MaterialComponents.Light.DarkActionBar"/>
@@ -307,5 +322,6 @@
         <item name="windowActionModeOverlay">true</item>
         <item name="android:actionModeBackground">@color/blue_grey_600</item>
         <item name="android:dialogTheme">@style/Dialog.Theme</item>
+        <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 </resources>

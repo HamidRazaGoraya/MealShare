@@ -35,7 +35,7 @@ import androidx.annotation.Nullable;
 public class TrackAllItems {
     public static void GetAllMyItems(Activity context, @NotNull FirebaseUser firebaseUser){
         FirebaseRef ref=new FirebaseRef();
-        FirebaseFirestore.getInstance().collection(ref.users).document(firebaseUser.getUid()).collection(ref.AllFoodShared).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        FirebaseFirestore.getInstance().collection(ref.users).document(firebaseUser.getUid()).collection(ref.AllFoodShared).whereEqualTo("data_status",0).orderBy("data_submission_time", Query.Direction.DESCENDING).limit(100).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 try {
@@ -65,7 +65,7 @@ public class TrackAllItems {
     public static void GetAllOtherItems(Activity context){
         FirebaseRef ref=new FirebaseRef();
         Log.i("Found","01");
-        FirebaseFirestore.getInstance().collectionGroup(ref.AllFoodShared).addSnapshotListener(new EventListener<QuerySnapshot>() {
+        FirebaseFirestore.getInstance().collectionGroup(ref.AllFoodShared).whereEqualTo("data_status",0).orderBy("data_submission_time", Query.Direction.DESCENDING).limit(100).addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
                 try {

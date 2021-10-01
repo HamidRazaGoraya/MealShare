@@ -18,6 +18,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -128,6 +129,7 @@ public class Share extends Fragment {
                      new ShowIntrest(new ShowIntrest.Buttons() {
                          @Override
                          public void SendMessage() {
+
                              ProfileInfo profileInfo= Utilities.UserProfile(requireActivity());
                              if (profileInfo.getUser_location()==null){
                                  return;
@@ -136,7 +138,9 @@ public class Share extends Fragment {
                              userInfo.put(ref.user_name,profileInfo.getUser_name());
                              userInfo.put(ref.user_profile_pic,profileInfo.getUser_profile_pic());
                              userInfo.put(ref.user_uid,FirebaseAuth.getInstance().getCurrentUser().getUid());
-                             userInfo.put(ref.user_location,profileInfo.getUser_location());
+                             if (profileInfo.getUser_location()!=null){
+                                 userInfo.put(ref.user_location,profileInfo.getUser_location());
+                             }
                              HashMap<String, Object> allInterested = new HashMap<>();
                              allInterested.put(ref.interested_users,userInfo);
                              allInterested.put(ref.user_uid,postedItems.getUserInfo().getUser_uid());

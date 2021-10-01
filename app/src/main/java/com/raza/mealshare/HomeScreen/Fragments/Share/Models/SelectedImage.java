@@ -44,13 +44,26 @@ public class SelectedImage {
         return UploadedPath!=null;
     }
     public void AddImage(@NotNull File file, Context context){
+        if (UploadedPath!=null){
+            removeOldImage(UploadedPath);
+            UploadedPath=null;
+        }
         if (file.exists()){
             this.file=file;
             ImageBack.setVisibility(View.VISIBLE);
             Glide.with(context).load(file.getAbsolutePath()).into(selectedImage);
         }
     }
+
+    private void removeOldImage(String uploadedPath) {
+
+    }
+
     public void AddImage(@NotNull Uri uri, Context context){
+        if (UploadedPath!=null){
+            removeOldImage(UploadedPath);
+            UploadedPath=null;
+        }
         this.uri=uri;
             ImageBack.setVisibility(View.VISIBLE);
             Glide.with(context).load(uri).into(selectedImage);

@@ -3,7 +3,7 @@
 
 
     <color name="navigationSelected">#FF0EAF64</color>
-    <color name="navigationUnselected">#FF979797</color>
+    <color name="navigationUnselected">#95FFFFFF</color>
     <color name="weight">#FFFFFFFF</color>
     <color name="themColorGreen">@color/navigationSelected</color>
     <color name="themColorYellow">#FFFFC045</color>
@@ -16,12 +16,12 @@
     <color name="buttonGray">#FF929292</color>
 
 
-      <color name="colorPrimary">#1976D2</color>
-    <color name="colorPrimaryDark">#1565C0</color>
-    <color name="colorPrimaryLight">#1E88E5</color>
-    <color name="colorAccent">#0091EA</color>
-    <color name="colorAccentDark">#F50057</color>
-    <color name="colorAccentLight">#FF80AB</color>
+      <color name="colorPrimary">#128c7e</color>
+    <color name="colorPrimaryDark">#075e54</color>
+    <color name="colorPrimaryLight">#25d366</color>
+    <color name="colorAccent">#128c7e</color>
+    <color name="colorAccentDark">#075e54</color>
+    <color name="colorAccentLight">#25d366</color>
 
     <color name="overlay_dark_10">#1A000000</color>
     <color name="overlay_dark_20">#33000000</color>
@@ -439,5 +439,5 @@
     <color name="upto">#003366</color>
     <color name="colorButtonGreyBg">#444444</color>
     <color name="backColorHome">#FAFAFA</color>
-
+    <color name="splash">#020235</color>
 </resources>

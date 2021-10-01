@@ -78,7 +78,7 @@ public class GetCategoryWithFIlter extends DialogFragment {
                 try {
                     if (binding.allFaculties.isChecked()){
                         andCategory.setCategory("ALL");
-                        andCategory.setRadius(binding.seekBar.getProgress()*5);
+                        andCategory.setRadius(binding.seekBar.getProgress()*60);
                         AsyncTask.execute(new Runnable() {
                             @Override
                             public void run() {
@@ -92,7 +92,7 @@ public class GetCategoryWithFIlter extends DialogFragment {
                     for (int i = 0; i< categoryArrayList.size(); i++){
                         if (allCategory[binding.pickerRange.getValue()-1].equals(categoryArrayList.get(i).getName())){
                             andCategory.setCategory(categoryArrayList.get(i).getName());
-                            andCategory.setRadius(binding.seekBar.getProgress()*5);
+                            andCategory.setRadius(binding.seekBar.getProgress()*60);
                             andCategory.setCategoryId(categoryArrayList.get(i).getId());
                             AsyncTask.execute(new Runnable() {
                                 @Override
@@ -110,15 +110,15 @@ public class GetCategoryWithFIlter extends DialogFragment {
                 }
             }
         });
-        binding.seekBar.setProgress(andCategory.radius/5);
-        binding.textView3.setText(String.valueOf(binding.seekBar.getProgress()*5)+"Km");
+        binding.seekBar.setProgress(andCategory.radius/60);
+        binding.textView3.setText(String.valueOf(binding.seekBar.getProgress()*60)+"Km");
         binding.seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress>=2){
-                    binding.textView3.setText(String.valueOf(progress*5)+"Km");
+                if (progress>=1){
+                    binding.textView3.setText(String.valueOf(progress*60)+"Km");
                 }else {
-                    seekBar.setProgress(2);
+                    seekBar.setProgress(1);
                 }
             }
 

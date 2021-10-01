@@ -26,18 +26,14 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/cortes" />
+                android:src="@drawable/splash_screen" />
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="@dimen/spacing_large" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/spacing_medium"
-                android:text="@string/welcome_to_share_items"
+                android:text="@string/app_name"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
                 android:textColor="?attr/colorPrimary"
                 android:textStyle="bold" />
@@ -46,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/padding_10"
                 android:text="@string/sign_in_to_continue"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Subhead"
                 android:textColor="@color/blue_grey_300" />

@@ -18,6 +18,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Looper;
@@ -51,7 +52,11 @@ import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.GeoPoint;
 import com.raza.mealshare.CustomDialogs.CustomToast;
+import com.raza.mealshare.Database.AllDataBaseConstant;
+import com.raza.mealshare.Database.RadiusFiles.AllRadius;
+import com.raza.mealshare.Database.RadiusFiles.RadiusAndCategory;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
+import com.raza.mealshare.MainActivity;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.CheckForPermissions;
 import com.raza.mealshare.Utilities.LoadingDialog;
@@ -287,16 +292,19 @@ public class PickUpLocation extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private void saveAndExit() {
+
         if (currentLatLog!=null){
             if (address.length()<5){
                 new CustomToast(PickUpLocation.this,"Address too short");
                 return;
             }
             Utilities.SaveLocation(PickUpLocation.this,currentLatLog);
+
             if (FirebaseAuth.getInstance().getCurrentUser()==null){
                 finish();
                 return;
             }
+
             loadingDialog.show();
             HashMap<String, Object> map=new HashMap<>();
             map.put(ref.user_address,address);
@@ -319,7 +327,6 @@ public class PickUpLocation extends AppCompatActivity implements OnMapReadyCallb
                     }
                 }
             });
-
         }
         finish();
     }

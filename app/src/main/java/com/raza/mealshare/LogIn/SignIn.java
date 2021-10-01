@@ -32,7 +32,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.hbb20.CountryCodePicker;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
 import com.raza.mealshare.HomeScreen.Home;
-import com.raza.mealshare.Intro.IntroImageWizard;
 import com.raza.mealshare.R;
 import com.raza.mealshare.Utilities.LoadingDialog;
 
@@ -148,19 +147,11 @@ public class SignIn extends Fragment {
                          sharedPref.edit().putBoolean(ref.NewUser,false).apply();
                          FirebaseAuth.getInstance().signOut();
                      }else {
-                         if (sharedPref.contains("firstTime")){
-                             startActivity(new Intent(getContext(), Home.class));
-                         }else {
-                             startActivity(new Intent(getContext(), IntroImageWizard.class));
-                         }
-                        requireActivity().finish();
+                         startActivity(new Intent(getContext(), Home.class));
+                         requireActivity().finish();
                      }
             }else {
-                if (sharedPref.contains("firstTime")){
-                    startActivity(new Intent(getContext(), Home.class));
-                }else {
-                    startActivity(new Intent(getContext(), IntroImageWizard.class));
-                }
+                startActivity(new Intent(getContext(), Home.class));
                 requireActivity().finish();
             }
          }else {

@@ -21,6 +21,7 @@ import com.raza.mealshare.Database.AllProductsFills.MyFavoruitProduct;
 import com.raza.mealshare.Database.AllProductsFills.OtherProduct;
 import com.raza.mealshare.ExtraFiles.CustomToast;
 import com.raza.mealshare.ExtraFiles.FirebaseRef;
+import com.raza.mealshare.HomeScreen.Fragments.ItemsDetails.ItemDetails;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.Favourite.Adopter.FavoFoodICategoryAdopter;
 import com.raza.mealshare.HomeScreen.Fragments.Profile.Model.ProfileInfo;
 import com.raza.mealshare.HomeScreen.Fragments.Share.Adopter.FoodICategoryAdopter;
@@ -64,7 +65,7 @@ public class FShare extends Fragment {
         foodICategoryAdopter.setClickListener(new FavoFoodICategoryAdopter.ItemClickListener() {
             @Override
             public void onItemClick(MyFavoruitProduct postedItems) {
-
+                startActivity(new Intent(requireContext(), ItemDetails.class).putExtra("otherProduct",new Gson().toJson(postedItems)));
             }
 
             @Override

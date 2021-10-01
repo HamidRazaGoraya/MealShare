@@ -15,7 +15,7 @@ public class SplashActivity extends AppCompatActivity {
     private final int SPLASH_DISPLAY_LENGTH = 1000;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.MainThem);
+        setTheme(R.style.splashThem);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         /* New Handler to start the Menu-Activity
